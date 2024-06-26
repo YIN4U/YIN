@@ -1,154 +1,149 @@
-const users = {
-    user1: { username: "user1", password: "password1", icon: "https://via.placeholder.com/24/0000FF/808080?text=U1" },
-    user2: { username: "user2", password: "password2", icon: "https://via.placeholder.com/24/FF0000/FFFFFF?text=U2" }
-};
-let currentUser = null;
+// Add a new message to the message list and auto-scroll
+function addMessageToList(message, index) {
+    const messageList = document.getElementById('message-list');
+    const messageItem = document.createElement('div');
+    messageItem.className = 'message-item';
+    messageItem.setAttribute('data-id', index);
 
-const quotes = [
-    "“I'm not a hero because I want your approval. I do it because I want to!” – Izuku Midoriya",
-    "“The moment you think of giving up, think of the reason why you held on so long.” – Natsu Dragneel",
-    "“We don’t have to know what tomorrow holds! That’s why we can live for everything we’re worth today!” – Natsu Dragneel",
-    "“The only thing we’re allowed to do is to believe that we won’t regret the choice we made.” – Levi Ackerman",
-    "“Power comes in response to a need, not a desire. You have to create that need.” – Goku",
-];
+    const senderInfo = document.createElement('div');
+    senderInfo.className = 'sender-info';
 
-function login() {
-    const username = document.getElementById("username").value;
-    const password = document.getElementById("password").value;
+    const userIcon = document.createElement('img');
+    userIcon.src = 'user_icon.png'; // Placeholder for user icon
+    userIcon.className = 'user-icon';
 
-    const user = Object.values(users).find(user => user.username === username && user.password === password);
-    if (user) {
-        currentUser = user.username;
-        document.getElementById("login-container").classList.add("hidden");
-        document.getElementById("app-container").classList.remove("hidden");
-        loadMessages();
-        displayRandomQuote();
-    } else {
-        document.getElementById("login-error").textContent = "Invalid username or password.";
-    }
-}
+    const senderName = document.createElement('span');
+    senderName.textContent = message.sender;
 
-function logout() {
-    currentUser = null;
-    document.getElementById("login-container").classList.remove("hidden");
-    document.getElementById("app-container").classList.add("hidden");
-}
+    senderInfo.appendChild(userIcon);
+    senderInfo.appendChild(senderName);
 
-function sendMessage() {
-    const content = document.getElementById("message-content").value;
-    const attachment = document.getElementById("attachment").files[0];
+    const messageContent = document.createElement('div');
+    messageContent.className = 'message-content';
+    messageContent.textContent = message.content;
 
-    if (content || attachment) {
-        const message = {
-            id: Date.now(),
-            user: currentUser,
-            content: content,
-            attachmentUrl: attachment ? URL.createObjectURL(attachment) : null,
-            attachmentType: attachment ? attachment.type : null
-        };
-
-        saveMessage(message);
-        displayMessage(message);
-
-        // Clear the input fields
-        document.getElementById("message-content").value = "";
-        document.getElementById("attachment").value = "";
-    } else {
-        alert("Please write a message or attach a file.");
-    }
-}
-
-function saveMessage(message) {
-    let messages = JSON.parse(localStorage.getItem("messages")) || [];
-    messages.push(message);
-    localStorage.setItem("messages", JSON.stringify(messages));
-}
-
-function loadMessages() {
-    let messages = JSON.parse(localStorage.getItem("messages")) || [];
-    document.getElementById("message-list").innerHTML = '';
-    messages.forEach(displayMessage);
-}
-
-function displayMessage(message) {
-    const messageList = document.getElementById("message-list");
-    const messageItem = document.createElement("div");
-    messageItem.classList.add("message-item");
-    messageItem.setAttribute("data-id", message.id);
-
-    const messageAuthor = document.createElement("div");
-    messageAuthor.classList.add("message-author");
-    const userIcon = document.createElement("img");
-    userIcon.src = users[message.user].icon;
-    messageAuthor.appendChild(userIcon);
-    const authorName = document.createElement("span");
-    authorName.textContent = message.user;
-    messageAuthor.appendChild(authorName);
-    messageItem.appendChild(messageAuthor);
-
-    const messageText = document.createElement("p");
-    messageText.textContent = message.content;
-    messageItem.appendChild(messageText);
-
-    if (message.attachmentUrl) {
-        if (message.attachmentType.startsWith("image/")) {
-            const image = document.createElement("img");
-            image.src = message.attachmentUrl;
-            messageItem.appendChild(image);
-        } else if (message.attachmentType.startsWith("video/")) {
-            const video = document.createElement("video");
-            video.src = message.attachmentUrl;
-            video.controls = true;
-            messageItem.appendChild(video);
+    if (message.attachment) {
+        const attachment = document.createElement(message.attachment.type === 'video' ? 'video' : 'img');
+        attachment.src = message.attachment.url;
+        if (message.attachment.type === 'video') {
+            attachment.controls = true;
         }
+        attachment.className = 'attachment';
+        messageItem.appendChild(attachment);
     }
 
-    if (message.user === currentUser) {
-        const actions = document.createElement("div");
-        actions.classList.add("message-actions");
+    const actions = document.createElement('div');
+    actions.className = 'actions';
 
-        const editButton = document.createElement("button");
-        editButton.textContent = "Edit";
-        editButton.onclick = () => editMessage(messageItem, messageText);
-        const deleteButton = document.createElement("button");
-        deleteButton.textContent = "Delete";
+    const currentUser = localStorage.getItem('username');
+    if (currentUser === message.sender) {
+        const editButton = document.createElement('button');
+        editButton.textContent = 'Edit';
+        editButton.className = 'edit-btn';
+        editButton.onclick = () => editMessage(messageItem, messageContent);
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+        deleteButton.className = 'delete-btn';
         deleteButton.onclick = () => deleteMessage(messageItem);
 
         actions.appendChild(editButton);
         actions.appendChild(deleteButton);
-
-        messageItem.appendChild(actions);
     }
 
+    messageItem.appendChild(senderInfo);
+    messageItem.appendChild(messageContent);
+    messageItem.appendChild(actions);
     messageList.appendChild(messageItem);
+
+    // Auto-scroll to the bottom
+    messageList.scrollTop = messageList.scrollHeight;
 }
 
-function editMessage(messageItem, messageText) {
-    const newContent = prompt("Edit your message:", messageText.textContent);
+// Function to send a message without refreshing the page
+function sendMessage() {
+    const messageContent = document.getElementById('message-content').value;
+    const attachmentInput = document.getElementById('attachment');
+    const sender = localStorage.getItem('username');
+
+    if (messageContent.trim() === '' && !attachmentInput.files.length) return;
+
+    let attachment = null;
+    if (attachmentInput.files.length) {
+        const file = attachmentInput.files[0];
+        const url = URL.createObjectURL(file);
+        attachment = { type: file.type.startsWith('video') ? 'video' : 'image', url };
+    }
+
+    const newMessage = { sender, content: messageContent, timestamp: new Date().toISOString(), attachment };
+    const messages = JSON.parse(localStorage.getItem('messages')) || [];
+    messages.push(newMessage);
+    localStorage.setItem('messages', JSON.stringify(messages));
+
+    addMessageToList(newMessage, messages.length - 1);
+    document.getElementById('message-content').value = ''; // Clear the input field
+    attachmentInput.value = ''; // Clear the attachment field
+}
+
+// Function to edit a message
+function editMessage(messageItem, messageContent) {
+    const newContent = prompt("Edit your message:", messageContent.textContent);
     if (newContent !== null) {
-        messageText.textContent = newContent;
-        const messageId = messageItem.getAttribute("data-id");
-        let messages = JSON.parse(localStorage.getItem("messages")) || [];
-        const message = messages.find(msg => msg.id == messageId);
+        messageContent.textContent = newContent;
+        const messageId = messageItem.getAttribute('data-id');
+        let messages = JSON.parse(localStorage.getItem('messages')) || [];
+        const message = messages[messageId];
         if (message) {
             message.content = newContent;
-            localStorage.setItem("messages", JSON.stringify(messages));
+            localStorage.setItem('messages', JSON.stringify(messages));
         }
     }
 }
 
+// Function to delete a message
 function deleteMessage(messageItem) {
     if (confirm("Are you sure you want to delete this message?")) {
-        const messageId = messageItem.getAttribute("data-id");
-        let messages = JSON.parse(localStorage.getItem("messages")) || [];
-        messages = messages.filter(msg => msg.id != messageId);
-        localStorage.setItem("messages", JSON.stringify(messages));
+        const messageId = messageItem.getAttribute('data-id');
+        let messages = JSON.parse(localStorage.getItem('messages')) || [];
+        messages.splice(messageId, 1);
+        localStorage.setItem('messages', JSON.stringify(messages));
         messageItem.remove();
+        loadMessages(); // Refresh the message list
     }
 }
 
-function displayRandomQuote() {
-    const quoteContainer = document.getElementById("quote-container");
-    const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
-    quoteContainer.textContent = randomQuote;
+// Function to load messages from localStorage on page load
+function loadMessages() {
+    const messages = JSON.parse(localStorage.getItem('messages')) || [];
+    const messageList = document.getElementById('message-list');
+    messageList.innerHTML = ''; // Clear the list
+    messages.forEach((message, index) => addMessageToList(message, index));
+}
+
+// Load messages when the app container is shown
+document.addEventListener('DOMContentLoaded', function() {
+    const appContainer = document.getElementById('app-container');
+    if (!appContainer.classList.contains('hidden')) {
+        loadMessages();
+    }
+});
+
+// Example function to show the app container after login
+function login() {
+    const username = document.getElementById('username').value;
+    if (username.trim() === '') {
+        document.getElementById('login-error').textContent = 'Username is required';
+        return;
+    }
+
+    localStorage.setItem('username', username);
+    document.getElementById('login-container').classList.add('hidden');
+    document.getElementById('app-container').classList.remove('hidden');
+    loadMessages();
+}
+
+function logout() {
+    localStorage.removeItem('username');
+    document.getElementById('login-container').classList.remove('hidden');
+    document.getElementById('app-container').classList.add('hidden');
 }
