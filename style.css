@@ -53,3 +53,66 @@ button:hover {
     background-color: #dc3545;
     float: right;
 }
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+.error {
+    color: red;
+}
+
+#message-list {
+    margin-bottom: 20px;
+}
+
+.message-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #000;
+    position: relative;
+}
+
+.message-item img, .message-item video {
+    max-width: 100%;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.message-author {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+}
+
+.message-author img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.message-actions {
+    margin-top: 10px;
+    text-align: right;
+}
+
+.message-actions button {
+    background-color: #f0f0f0;
+    color: #333;
+    margin-left: 5px;
+}
+
+.message-actions button:hover {
+    background-color: #ccc;
+}
+
+#quote-container {
+    margin-bottom: 20px;
+    text-align: center;
+    font-style: italic;
+}
