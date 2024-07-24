@@ -1,4 +1,4 @@
-let adminLoggedIn = false;
+4333let adminLoggedIn = false;
 const username = "admin";
 const password = "12345";
 
@@ -6,14 +6,26 @@ const password = "12345";
 const projects = [
     {
         name: "مشروع 1",
-        thumbnail: "path/to/thumbnail1.jpg",
-        projectUrl: "path/to/project1.zip"
+        thumbnail: "L1.jpg",
+        projectUrl: "Project/L1.zip"
     },
     {
         name: "مشروع 2",
-        thumbnail: "path/to/thumbnail2.jpg",
-        projectUrl: "path/to/project2.zip"
+        thumbnail: "L2.jpg",
+        projectUrl: "Project/L2.zip"
     },
+    {
+        name: "مشروع 3",
+        thumbnail: "L3.jpg",
+        projectUrl: "Project/L3.zip"
+    },
+    {
+        name: "مشروع ",
+        thumbnail: "L4.jpg",
+        projectUrl: "Project/L4.zip"
+    },
+
+    
     // أضف المزيد من المشاريع هنا كما تريد
 ];
 
