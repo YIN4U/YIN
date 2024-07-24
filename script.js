@@ -2,6 +2,21 @@ let adminLoggedIn = false;
 const username = "admin";
 const password = "12345";
 
+// تعريف المشاريع الثابتة ومساراتها
+const projects = [
+    {
+        name: "مشروع 1",
+        thumbnail: "path/to/thumbnail1.jpg",
+        projectUrl: "path/to/project1.zip"
+    },
+    {
+        name: "مشروع 2",
+        thumbnail: "path/to/thumbnail2.jpg",
+        projectUrl: "path/to/project2.zip"
+    },
+    // أضف المزيد من المشاريع هنا كما تريد
+];
+
 // التحقق من تسجيل الدخول كأدمن
 function loginAdmin() {
     const enteredUsername = document.getElementById('username').value;
@@ -14,34 +29,6 @@ function loginAdmin() {
     } else {
         alert('اسم المستخدم أو كلمة السر غير صحيحة');
     }
-}
-
-// رفع المشروع وتخزينه في localStorage
-function uploadProject() {
-    if (!adminLoggedIn) {
-        alert('يجب تسجيل الدخول كأدمن لرفع مشروع');
-        return;
-    }
-
-    const projectFile = document.getElementById('project-file').files[0];
-    const thumbnailFile = document.getElementById('thumbnail-file').files[0];
-
-    if (!projectFile || !thumbnailFile) {
-        alert('يرجى اختيار ملفات المشروع والصورة المصغرة');
-        return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        const projectData = {
-            name: projectFile.name,
-            thumbnail: URL.createObjectURL(thumbnailFile),
-            projectUrl: URL.createObjectURL(projectFile)
-        };
-        addProjectToGallery(projectData);
-        saveProject(projectData);
-    };
-    reader.readAsDataURL(projectFile);
 }
 
 // إضافة المشروع إلى المعرض
@@ -57,17 +44,19 @@ function addProjectToGallery(project) {
     gallery.appendChild(projectElement);
 }
 
-// حذف جميع المشاريع من المعرض والتخزين المحلي
+// حذف جميع المشاريع من المعرض
 function deleteProjects() {
     if (!adminLoggedIn) {
         alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
         return;
     }
-    localStorage.removeItem('projects');
-    document.getElementById('projects-gallery').innerHTML = '';
+    const gallery = document.getElementById('projects-gallery');
+    while (gallery.firstChild) {
+        gallery.removeChild(gallery.firstChild);
+    }
 }
 
-// حذف مشروع معين من المعرض والتخزين المحلي
+// حذف مشروع معين من المعرض
 function deleteProject(button, projectName) {
     if (!adminLoggedIn) {
         alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
@@ -75,26 +64,10 @@ function deleteProject(button, projectName) {
     }
     const projectElement = button.parentElement;
     projectElement.remove();
-    removeProjectFromStorage(projectName);
 }
 
-// حفظ المشروع في التخزين المحلي
-function saveProject(project) {
-    let projects = JSON.parse(localStorage.getItem('projects')) || [];
-    projects.push(project);
-    localStorage.setItem('projects', JSON.stringify(projects));
-}
-
-// إزالة المشروع من التخزين المحلي
-function removeProjectFromStorage(projectName) {
-    let projects = JSON.parse(localStorage.getItem('projects')) || [];
-    projects = projects.filter(project => project.name !== projectName);
-    localStorage.setItem('projects', JSON.stringify(projects));
-}
-
-// استرجاع المشاريع من التخزين المحلي عند تحميل الصفحة
+// استرجاع المشاريع عند تحميل الصفحة
 function loadProjects() {
-    const projects = JSON.parse(localStorage.getItem('projects')) || [];
     projects.forEach(project => addProjectToGallery(project));
 }
 
