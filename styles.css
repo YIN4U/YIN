@@ -1,41 +1,60 @@
 body {
     font-family: Arial, sans-serif;
+    direction: rtl;
     background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
+    color: #333;
 }
+
 .container {
-    max-width: 800px;
-    margin: auto;
+    width: 80%;
+    margin: 0 auto;
     padding: 20px;
-    background: #fff;
+    background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-h1 {
-    text-align: center;
+
+h1, h2 {
+    color: #008080;
 }
+
 form {
-    display: flex;
-    justify-content: space-between;
     margin-bottom: 20px;
 }
-#projects {
+
+input[type="text"], input[type="password"], input[type="file"] {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+    width: 100%;
+}
+
+button {
+    background-color: #008080;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #005959;
+}
+
+#projects-gallery {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
 }
-.project {
-    background: #fff;
+
+.project-thumbnail {
+    margin: 10px;
     border: 1px solid #ddd;
     padding: 10px;
-    width: calc(33.333% - 20px);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
-.project img {
-    max-width: 100%;
-    height: auto;
-}
-.project button {
-    margin-top: 10px;
+
+.project-thumbnail img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
 }
