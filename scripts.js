@@ -1,60 +1,102 @@
-document.getElementById('uploadForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+let adminLoggedIn = false;
+const username = "admin";
+const password = "12345";
 
-    const projectInput = document.getElementById('projectInput');
-    const thumbnailInput = document.getElementById('thumbnailInput');
+// التحقق من تسجيل الدخول كأدمن
+function loginAdmin() {
+    const enteredUsername = document.getElementById('username').value;
+    const enteredPassword = document.getElementById('password').value;
 
-    if (projectInput.files.length === 0 || thumbnailInput.files.length === 0) {
-        alert('Please select both a project file and a thumbnail image.');
+    if (enteredUsername === username && enteredPassword === password) {
+        adminLoggedIn = true;
+        document.getElementById('admin-controls').style.display = 'block';
+        document.getElementById('admin-login-form').style.display = 'none';
+    } else {
+        alert('اسم المستخدم أو كلمة السر غير صحيحة');
+    }
+}
+
+// رفع المشروع وتخزينه في localStorage
+function uploadProject() {
+    if (!adminLoggedIn) {
+        alert('يجب تسجيل الدخول كأدمن لرفع مشروع');
         return;
     }
 
-    const projectFile = projectInput.files[0];
-    const thumbnailFile = thumbnailInput.files[0];
+    const projectFile = document.getElementById('project-file').files[0];
+    const thumbnailFile = document.getElementById('thumbnail-file').files[0];
 
-    const projectReader = new FileReader();
-    const thumbnailReader = new FileReader();
-
-    projectReader.onload = function(e) {
-        const projectFileUrl = e.target.result;
-
-        thumbnailReader.onload = function(e) {
-            const thumbnailUrl = e.target.result;
-
-            const project = {
-                id: Date.now(),
-                file: projectFileUrl,
-                thumbnail: thumbnailUrl,
-                filename: projectFile.name
-            };
-
-            addProject(project);
-        };
-
-        thumbnailReader.readAsDataURL(thumbnailFile);
-    };
-
-    projectReader.readAsDataURL(projectFile);
-});
-
-function addProject(project) {
-    const projectContainer = document.createElement('div');
-    projectContainer.className = 'project';
-    projectContainer.dataset.id = project.id;
-
-    projectContainer.innerHTML = `
-        <img src="${project.thumbnail}" alt="Thumbnail">
-        <p>${project.filename}</p>
-        <a href="${project.file}" download="${project.filename}">Download</a>
-        <button onclick="deleteProject(${project.id})">Delete</button>
-    `;
-
-    document.getElementById('projects').appendChild(projectContainer);
-}
-
-function deleteProject(id) {
-    const projectElement = document.querySelector(`.project[data-id="${id}"]`);
-    if (projectElement) {
-        projectElement.remove();
+    if (!projectFile || !thumbnailFile) {
+        alert('يرجى اختيار ملفات المشروع والصورة المصغرة');
+        return;
     }
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        const projectData = {
+            name: projectFile.name,
+            thumbnail: URL.createObjectURL(thumbnailFile),
+            projectUrl: URL.createObjectURL(projectFile)
+        };
+        addProjectToGallery(projectData);
+        saveProject(projectData);
+    };
+    reader.readAsDataURL(projectFile);
 }
+
+// إضافة المشروع إلى المعرض
+function addProjectToGallery(project) {
+    const gallery = document.getElementById('projects-gallery');
+    const projectElement = document.createElement('div');
+    projectElement.className = 'project-thumbnail';
+    projectElement.innerHTML = `
+        <img src="${project.thumbnail}" alt="${project.name}">
+        <a href="${project.projectUrl}" download="${project.name}">تحميل المشروع</a>
+        <button onclick="deleteProject(this, '${project.name}')">حذف المشروع</button>
+    `;
+    gallery.appendChild(projectElement);
+}
+
+// حذف جميع المشاريع من المعرض والتخزين المحلي
+function deleteProjects() {
+    if (!adminLoggedIn) {
+        alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
+        return;
+    }
+    localStorage.removeItem('projects');
+    document.getElementById('projects-gallery').innerHTML = '';
+}
+
+// حذف مشروع معين من المعرض والتخزين المحلي
+function deleteProject(button, projectName) {
+    if (!adminLoggedIn) {
+        alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
+        return;
+    }
+    const projectElement = button.parentElement;
+    projectElement.remove();
+    removeProjectFromStorage(projectName);
+}
+
+// حفظ المشروع في التخزين المحلي
+function saveProject(project) {
+    let projects = JSON.parse(localStorage.getItem('projects')) || [];
+    projects.push(project);
+    localStorage.setItem('projects', JSON.stringify(projects));
+}
+
+// إزالة المشروع من التخزين المحلي
+function removeProjectFromStorage(projectName) {
+    let projects = JSON.parse(localStorage.getItem('projects')) || [];
+    projects = projects.filter(project => project.name !== projectName);
+    localStorage.setItem('projects', JSON.stringify(projects));
+}
+
+// استرجاع المشاريع من التخزين المحلي عند تحميل الصفحة
+function loadProjects() {
+    const projects = JSON.parse(localStorage.getItem('projects')) || [];
+    projects.forEach(project => addProjectToGallery(project));
+}
+
+// تحميل المشاريع عند تحميل الصفحة
+window.onload = loadProjects;
