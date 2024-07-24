@@ -1,21 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="ar">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixelab Project Uploader</title>
+
+    <title>متجر بكسلاب</title>
+
     <link rel="stylesheet" href="styles.css">
+
 </head>
+
 <body>
+
     <div class="container">
-        <h1>Upload Your Pixelab Projects</h1>
-        <form id="uploadForm">
-            <input type="file" id="projectInput" accept=".plp" required>
-            <input type="file" id="thumbnailInput" accept="image/*" required>
-            <button type="submit">Upload</button>
-        </form>
-        <div id="projects"></div>
+
+        <h1>متجر بكسلاب</h1>
+
+        <div id="admin-section">
+
+            <h2>تسجيل دخول الأدمن</h2>
+
+            <form id="admin-login-form">
+
+                <input type="text" id="username" placeholder="اسم المستخدم">
+
+                <input type="password" id="password" placeholder="كلمة السر">
+
+                <button type="button" onclick="loginAdmin()">تسجيل دخول</button>
+
+            </form>
+
+            <div id="admin-controls" style="display:none;">
+
+                <h2>رفع مشروع</h2>
+
+                <form id="upload-form">
+
+                    <input type="file" id="project-file" accept=".zip,.rar">
+
+                    <input type="file" id="thumbnail-file" accept="image/*">
+
+                    <button type="button" onclick="uploadProject()">رفع المشروع</button>
+
+                </form>
+
+                <button type="button" onclick="deleteProjects()">حذف جميع المشاريع</button>
+
+            </div>
+
+        </div>
+
+        <div id="projects-section">
+
+            <h2>مشاريع المتجر</h2>
+
+            <div id="projects-gallery"></div>
+
+        </div>
+
     </div>
+
     <script src="script.js"></script>
+
 </body>
+
 </html>
