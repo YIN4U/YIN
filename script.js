@@ -13,9 +13,9 @@ const projects = [
 
 // تعريف التطبيقات الثابتة ومساراتها
 const apps = [
-    { name: "تطبيق 1", thumbnail: "A1.jpg", appUrl: "Apps/A1.zip" },
-    { name: "تطبيق 2", thumbnail: "A2.jpg", appUrl: "Apps/A2.zip" },
-    { name: "تطبيق 3", thumbnail: "A3.jpg", appUrl: "Apps/A3.zip" },
+    { name: "PicsArt", thumbnail: "A1.jpg", appUrl: "Apps/A1.zip" },
+    { name: "Pixellab", thumbnail: "A2.jpg", appUrl: "Apps/A2.zip" },
+    { name: "PS tuch", thumbnail: "A3.jpg", appUrl: "Apps/A3.zip" },
     { name: "تطبيق 4", thumbnail: "A4.jpg", appUrl: "Apps/A4.zip" },
     // أضف المزيد من التطبيقات هنا كما تريد
 ];
