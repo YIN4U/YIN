@@ -1,60 +1,45 @@
-body {
-    font-family: Arial, sans-serif;
-    direction: rtl;
-    background-color: #f4f4f4;
-    color: #333;
+
+#admin-login-form button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #444;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
 }
 
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+#admin-controls {
+    margin-top: 20px;
 }
 
-h1, h2 {
-    color: #008080;
+#admin-controls button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #d9534f;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 10px;
 }
 
-form {
-    margin-bottom: 20px;
+a {
+    color: #007bff;
+    text-decoration: none;
 }
 
-input[type="text"], input[type="password"], input[type="file"] {
-    display: block;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
+a:hover {
+    text-decoration: underline;
 }
 
 button {
-    background-color: #008080;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 10px;
     cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background-color: #005959;
-}
-
-#projects-gallery {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.project-thumbnail {
-    margin: 10px;
-    border: 1px solid #ddd;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-.project-thumbnail img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+    background-color: #ddd;
 }
