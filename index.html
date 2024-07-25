@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="ar">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر بكسلاب</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h1>متجر بكسلاب</h1>
+                <li><a href="#" onclick="showSection('ads-section')">الإعلانات</a></li>
+            </ul>
+        </nav>
         <div id="admin-section">
             <h2>تسجيل دخول الأدمن</h2>
             <form id="admin-login-form">
@@ -20,11 +11,27 @@
             <div id="admin-controls" style="display:none;">
                 <h2>إدارة المشاريع</h2>
                 <button type="button" onclick="deleteProjects()">حذف جميع المشاريع</button>
+                <h2>إدارة التطبيقات</h2>
+                <button type="button" onclick="deleteApps()">حذف جميع التطبيقات</button>
             </div>
         </div>
-        <div id="projects-section">
-            <h2>مشاريع المتجر</h2>
-            <div id="projects-gallery"></div>
+        <div id="content">
+            <div id="projects-section" class="section">
+                <h2>مشاريع المتجر</h2>
+                <div id="projects-gallery"></div>
+            </div>
+            <div id="news-section" class="section" style="display: none;">
+                <h2>الأخبار</h2>
+                <div id="news-gallery"></div>
+            </div>
+            <div id="apps-section" class="section" style="display: none;">
+                <h2>تطبيقات المتجر</h2>
+                <div id="apps-gallery"></div>
+            </div>
+            <div id="ads-section" class="section" style="display: none;">
+                <h2>الإعلانات</h2>
+                <div id="ads-gallery"></div>
+            </div>
         </div>
     </div>
     <script src="script.js"></script>
