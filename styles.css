@@ -1,60 +1,38 @@
-body {
-    font-family: Arial, sans-serif;
-    direction: rtl;
-    background-color: #f4f4f4;
-    color: #333;
-}
-
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #fff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-h1, h2 {
-    color: #008080;
-}
-
-form {
-    margin-bottom: 20px;
-}
-
-input[type="text"], input[type="password"], input[type="file"] {
-    display: block;
-    margin-bottom: 10px;
-    padding: 10px;
-    width: 100%;
-}
-
-button {
-    background-color: #008080;
-    color: #fff;
-    padding: 10px 15px;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #005959;
-}
-
-#projects-gallery {
-    display: flex;
-    flex-wrap: wrap;
-}
-
-.project-thumbnail {
-    margin: 10px;
+    background: #fff;
     border: 1px solid #ddd;
-    padding: 10px;
-    background-color: #fff;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 15px;
+    text-align: center;
+    width: 250px;
 }
 
 .project-thumbnail img {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
+    max-width: 100%;
+    border-radius: 4px;
+    margin-bottom: 10px;
+}
+
+.project-thumbnail a {
+    display: block;
+    color: #3498db;
+    text-decoration: none;
+    margin-bottom: 10px;
+}
+
+.project-thumbnail a:hover {
+    text-decoration: underline;
+}
+
+.project-thumbnail button {
+    padding: 10px 20px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.project-thumbnail button:hover {
+    background-color: #c0392b;
 }
