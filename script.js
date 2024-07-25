@@ -22,9 +22,9 @@ const apps = [
 
 // تعريف الأخبار الثابتة
 const news = [
-    { title: "خبر 1", content: "هذا هو الخبر الأول.", media: "news1.jpg" },
-    { title: "خبر 2", content: "هذا هو الخبر الثاني.", media: "news2.jpg" },
-    { title: "خبر 3", content: "هذا هو الخبر الثالث.", media: "news3.mp4" },
+    { title: "1", content: "الموقع قيد التطوير...", media: "news1.jpg" },
+    { title: "2", content: "لم يتم بعد اضافة تطبيق PicsArt", media: "news2.jpg" },
+    { title: "3", content: "هذا هو الخبر الثالث.", media: "news3.mp4" },
     // أضف المزيد من الأخبار هنا كما تريد
 ];
 
