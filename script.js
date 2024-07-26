@@ -19,21 +19,21 @@ const projects = [
 // تعريف التطبيقات الثابتة ومساراتها
 const apps = [
     { name: "Pixellab", thumbnail: "A2.jpg", appUrl: "Apps/A2.zip" },
-    { name: "PS tuch", thumbnail: "A3.jpg", appUrl: "Apps/A3.zip" },
+    { name: "PS tuch", thumbnail: "photo/A3.jpg", appUrl: "Apps/A3.zip" },
     // أضف المزيد من التطبيقات هنا كما تريد
 ];
 
 // تعريف الأخبار الثابتة
 const news = [
-    { title: "الموقع قيد التطوير...", content: "", media: "" },
-    { title: "مشاريع تصميم بكسلاب", content: "", media: "" },
+    { title: "الموقع قيد التطوير...", content: "" },
+    { title: "مشاريع تصميم بكسلاب", content: "" },
     { title: "فيديو شرح للموقع قريبا...", content: "", media: "" },
     // أضف المزيد من الأخبار هنا كما تريد
 ];
 
 // تعريف الإعلانات الثابتة
 const ads = [
-    { title: "لا توجد اعلانات حاليا", content: "", media: "" },
+    { title: "لا توجد اعلانات حاليا", content: "" },
     { title: "", content: "", media: "" },
     { title: "", content: "", media: "" },
     // أضف المزيد من الإعلانات هنا كما تريد
