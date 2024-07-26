@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>متجر بكسلاب</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKS96PHH82"></script>
@@ -16,7 +17,6 @@
 
       gtag('config', 'G-SKS96PHH82');
     </script>
-
 </head>
 <body>
     <div class="container">
@@ -27,10 +27,10 @@
         </div>
         <nav class="navbar">
             <ul>
-                <li><a href="#" onclick="showSection('projects-section')">المشاريع</a></li>
-                <li><a href="#" onclick="showSection('news-section')">الأخبار</a></li>
-                <li><a href="#" onclick="showSection('apps-section')">التطبيقات</a></li>
-                <li><a href="#" onclick="showSection('ads-section')">الإعلانات</a></li>
+                <li><a href="#" onclick="showSection('projects-section')"><i class="fas fa-project-diagram"></i></a></li>
+                <li><a href="#" onclick="showSection('news-section')"><i class="fas fa-newspaper"></i></a></li>
+                <li><a href="#" onclick="showSection('apps-section')"><i class="fas fa-mobile-alt"></i></a></li>
+                <li><a href="#" onclick="showSection('ads-section')"><i class="fas fa-ad"></i></a></li>
             </ul>
         </nav>
         <div id="admin-section">
@@ -49,19 +49,19 @@
         </div>
         <div id="content">
             <div id="projects-section" class="section">
-                <h2>مشاريع المتجر</h2>
+                <i class="fas fa-project-diagram section-icon"></i>
                 <div id="projects-gallery"></div>
             </div>
             <div id="news-section" class="section" style="display: none;">
-                <h2>الأخبار</h2>
+                <i class="fas fa-newspaper section-icon"></i>
                 <div id="news-gallery"></div>
             </div>
             <div id="apps-section" class="section" style="display: none;">
-                <h2>تطبيقات المتجر</h2>
+                <i class="fas fa-mobile-alt section-icon"></i>
                 <div id="apps-gallery"></div>
             </div>
             <div id="ads-section" class="section" style="display: none;">
-                <h2>الإعلانات</h2>
+                <i class="fas fa-ad section-icon"></i>
                 <div id="ads-gallery"></div>
             </div>
         </div>
