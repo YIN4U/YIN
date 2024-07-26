@@ -4,10 +4,15 @@ const password = "12345";
 
 // تعريف المشاريع الثابتة ومساراتها
 const projects = [
-    { name: "مشروع 1", thumbnail: "L1.jpg", projectUrl: "Project/L1.zip" },
-    { name: "مشروع 2", thumbnail: "L2.jpg", projectUrl: "Project/L2.zip" },
-    { name: "مشروع 3", thumbnail: "L3.jpg", projectUrl: "Project/L3.zip" },
-    { name: "مشروع 4", thumbnail: "L4.jpg", projectUrl: "Project/L4.zip" },
+    { name: "مشروع 1", thumbnail: "Img/L1.jpg", projectUrl: "Project/L1.zip" },
+    { name: "مشروع 2", thumbnail: "Img/L2.jpg", projectUrl: "Project/L2.zip" },
+    { name: "مشروع 3", thumbnail: "Img/L3.jpg", projectUrl: "Project/L3.zip" },
+    { name: "مشروع 4", thumbnail: "Img/L4.jpg", projectUrl: "Project/L4.zip" },
+    { name: "مشروع 5", thumbnail: "Img/L5.jpg", projectUrl: "Project/L5.zip" },
+    { name: "مشروع 6", thumbnail: "Img/L6.jpg", projectUrl: "Project/L6.zip" },
+    { name: "مشروع 7", thumbnail: "Img/L7.jpg", projectUrl: "Project/L7.zip" },
+    { name: "مشروع 8", thumbnail: "Img/L8.jpg", projectUrl: "Project/L8.zip" },
+    { name: "مشروع 9", thumbnail: "Img/L9.jpg", projectUrl: "Project/L9.zip" },
     // أضف المزيد من المشاريع هنا كما تريد
 ];
 
