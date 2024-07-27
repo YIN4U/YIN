@@ -1,6 +1,6 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: #f0f0f0;
+    background-color: silver;
     margin: 0;
     padding: 0;
     direction: rtl;
@@ -17,7 +17,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #4caf50;
+    background-color: #f0f0f0;
     padding: 10px 20px;
     color: #fff;
     border-radius: 8px;
@@ -70,7 +70,7 @@ body {
 .gallery.grid img {
     width: 100%;
     height: auto;
-    border-radius: 8px;
+    border-radius: 15px;
     transition: transform 0.3s;
 }
 
