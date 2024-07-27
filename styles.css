@@ -1,6 +1,6 @@
 body {
     font-family: 'Poppins', sans-serif;
-    background-color: gold;
+    background-color: #f7f7f7; /* Light gray background */
     margin: 0;
     padding: 0;
     direction: rtl;
@@ -17,7 +17,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #f0f0f0;
+    background-color: #333; /* Darker color for header */
     padding: 10px 20px;
     color: #fff;
     border-radius: 8px;
@@ -63,14 +63,14 @@ body {
 
 .gallery.grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjusted for better layout */
+    gap: 20px; /* Increased gap for better spacing */
 }
 
 .gallery.grid img {
     width: 100%;
     height: auto;
-    border-radius: 15px;
+    border-radius: 10px; /* Adjusted border radius */
     transition: transform 0.3s;
 }
 
@@ -82,14 +82,18 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-color: #fff;
+    border-radius: 10px; /* Added border radius for better look */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 10px; /* Added padding for spacing */
 }
 
 .project-thumbnail a, .project-thumbnail button {
-    margin-top: 5px;
-    padding: 5px 10px;
+    margin-top: 10px; /* Increased margin for better spacing */
+    padding: 8px 16px; /* Adjusted padding */
     border: none;
-    border-radius: 2px;
-    background-color: gold;
+    border-radius: 4px; /* Adjusted border radius */
+    background-color: #4caf50; /* Green color for buttons */
     color: #fff;
     cursor: pointer;
     text-decoration: none;
@@ -97,7 +101,7 @@ body {
 }
 
 .project-thumbnail a:hover, .project-thumbnail button:hover {
-    background-color: gold;
+    background-color: #45a049;
 }
 
 #admin-section {
