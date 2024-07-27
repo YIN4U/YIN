@@ -63,7 +63,7 @@ body {
 
 .gallery.grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 15px;
 }
 
@@ -85,11 +85,11 @@ body {
 }
 
 .project-thumbnail a, .project-thumbnail button {
-    margin-top: 10px;
-    padding: 10px 15px;
+    margin-top: 5px;
+    padding: 5px 10px;
     border: none;
-    border-radius: 4px;
-    background-color: #4caf50;
+    border-radius: 2px;
+    background-color: gold;
     color: #fff;
     cursor: pointer;
     text-decoration: none;
@@ -97,7 +97,7 @@ body {
 }
 
 .project-thumbnail a:hover, .project-thumbnail button:hover {
-    background-color: #45a049;
+    background-color: gold;
 }
 
 #admin-section {
