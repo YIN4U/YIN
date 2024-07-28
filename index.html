@@ -21,11 +21,27 @@
             </nav>
         </header>
         
-        <div id="admin-section" class="admin-section">
+        <div id="user-section" class="user-section">
+            <form id="register-form" class="register-form">
+                <h2>إنشاء حساب</h2>
+                <input type="text" id="reg-username" placeholder="اسم المستخدم">
+                <input type="password" id="reg-password" placeholder="كلمة السر">
+                <button type="button" onclick="registerUser()">إنشاء حساب</button>
+            </form>
+
+            <form id="login-form" class="login-form">
+                <h2>تسجيل الدخول</h2>
+                <input type="text" id="login-username" placeholder="اسم المستخدم">
+                <input type="password" id="login-password" placeholder="كلمة السر">
+                <button type="button" onclick="loginUser()">تسجيل دخول</button>
+            </form>
+        </div>
+        
+        <div id="admin-section" class="admin-section" style="display:none;">
             <form id="admin-login-form" class="admin-login-form">
-                <input type="text" id="username" placeholder="اسم المستخدم">
-                <input type="password" id="password" placeholder="كلمة السر">
-                <button type="button" onclick="loginAdmin()">تسجيل دخول</button>
+                <input type="text" id="admin-username" placeholder="اسم المستخدم">
+                <input type="password" id="admin-password" placeholder="كلمة السر">
+                <button type="button" onclick="loginAdmin()">تسجيل دخول كأدمن</button>
             </form>
 
             <div id="admin-controls" style="display:none;">
@@ -45,11 +61,25 @@
                         <img src="path/to/image1.jpg" alt="Project 1">
                         <button>تحميل المشروع</button>
                         <button>حذف المشروع</button>
+                        <div class="rating">
+                            <span class="star" data-value="5">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="1">&#9733;</span>
+                        </div>
                     </div>
                     <div class="card">
                         <img src="path/to/image2.jpg" alt="Project 2">
                         <button>تحميل المشروع</button>
                         <button>حذف المشروع</button>
+                        <div class="rating">
+                            <span class="star" data-value="5">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="1">&#9733;</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -62,15 +92,31 @@
                         <img src="path/to/image3.jpg" alt="App 1">
                         <button>تحميل التطبيق</button>
                         <button>حذف التطبيق</button>
+                        <div class="rating">
+                            <span class="star" data-value="5">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="1">&#9733;</span>
+                        </div>
                     </div>
                     <div class="card">
                         <img src="path/to/image4.jpg" alt="App 2">
                         <button>تحميل التطبيق</button>
                         <button>حذف التطبيق</button>
+                        <div class="rating">
+                            <span class="star" data-value="5">&#9733;</span>
+                            <span class="star" data-value="4">&#9733;</span>
+                            <span class="star" data-value="3">&#9733;</span>
+                            <span class="star" data-value="2">&#9733;</span>
+                            <span class="star" data-value="1">&#9733;</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
