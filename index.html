@@ -3,43 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجر بكسلاب</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>متجر بكسلاب</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKS96PHH82"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-SKS96PHH82');
-    </script>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="photo/logo.png" alt="Logo" class="logo">
-            <h1>متجر بكسلاب</h1>
-            <img src="photo/logo.png" alt="Logo" class="logo">
-        </div>
-        <nav class="navbar">
-            <ul>
-                <li><a href="#" onclick="showSection('projects-section')"><i class="fas fa-project-diagram"></i></a></li>
-                <li><a href="#" onclick="showSection('news-section')"><i class="fas fa-newspaper"></i></a></li>
-                <li><a href="#" onclick="showSection('apps-section')"><i class="fas fa-mobile-alt"></i></a></li>
-                <li><a href="#" onclick="showSection('ads-section')"><i class="fas fa-ad"></i></a></li>
-            </ul>
-        </nav>
-        <div id="admin-section">
-            <h2>تسجيل دخول الأدمن</h2>
-            <form id="admin-login-form">
+        <header class="header">
+            <div class="logo">متجر بكسلاب</div>
+            <nav class="navbar">
+                <ul>
+                    <li><a href="#">الرئيسية</a></li>
+                    <li><a href="#">المشاريع</a></li>
+                    <li><a href="#">التطبيقات</a></li>
+                    <li><a href="#">اتصل بنا</a></li>
+                </ul>
+            </nav>
+        </header>
+        
+        <div id="admin-section" class="admin-section">
+            <form id="admin-login-form" class="admin-login-form">
                 <input type="text" id="username" placeholder="اسم المستخدم">
                 <input type="password" id="password" placeholder="كلمة السر">
                 <button type="button" onclick="loginAdmin()">تسجيل دخول</button>
             </form>
+
             <div id="admin-controls" style="display:none;">
                 <h2>إدارة المشاريع</h2>
                 <button type="button" onclick="deleteProjects()">حذف جميع المشاريع</button>
@@ -47,39 +35,42 @@
                 <button type="button" onclick="deleteApps()">حذف جميع التطبيقات</button>
             </div>
         </div>
-        <div id="content">
+
+        <div id="content" class="content">
             <div id="projects-section" class="section">
-                <i class="fas fa-project-diagram section-icon"></i>
+                <h2>المشاريع</h2>
                 <div id="projects-gallery" class="gallery grid">
                     <!-- أمثلة على الصور -->
-                    <img src="path" alt="">
-                    
-                    
+                    <div class="card">
+                        <img src="path/to/image1.jpg" alt="Project 1">
+                        <button>تحميل المشروع</button>
+                        <button>حذف المشروع</button>
+                    </div>
+                    <div class="card">
+                        <img src="path/to/image2.jpg" alt="Project 2">
+                        <button>تحميل المشروع</button>
+                        <button>حذف المشروع</button>
+                    </div>
                 </div>
             </div>
-            <div id="news-section" class="section" style="display: none;">
-                <i class="fas fa-newspaper section-icon"></i>
-                <div id="news-gallery" class="gallery grid">
-                    <!-- أمثلة على الصور -->
-                    <img src="path/" alt="">
-                </div>
-            </div>
-            <div id="apps-section" class="section" style="display: none;">
-                <i class="fas fa-mobile-alt section-icon"></i>
+
+            <div id="apps-section" class="section">
+                <h2>التطبيقات</h2>
                 <div id="apps-gallery" class="gallery grid">
                     <!-- أمثلة على الصور -->
-                    <img src="path" alt="">
-                </div>
-            </div>
-            <div id="ads-section" class="section" style="display: none;">
-                <i class="fas fa-ad section-icon"></i>
-                <div id="ads-gallery" class="gallery grid">
-                    <!-- أمثلة على الصور -->
-                    <img src="path" alt="">
+                    <div class="card">
+                        <img src="path/to/image3.jpg" alt="App 1">
+                        <button>تحميل التطبيق</button>
+                        <button>حذف التطبيق</button>
+                    </div>
+                    <div class="card">
+                        <img src="path/to/image4.jpg" alt="App 2">
+                        <button>تحميل التطبيق</button>
+                        <button>حذف التطبيق</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <script src="script.js"></script>
 </body>
 </html>
