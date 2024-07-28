@@ -1,50 +1,78 @@
+const fs = require('fs');
+
+let users = [];
 let adminLoggedIn = false;
-const username = "admin";
-const password = "12345";
+let currentUser = null;
 
-// تعريف المشاريع الثابتة ومساراتها
+// Load users from JSON file
+fs.readFile('users.json', (err, data) => {
+    if (err && err.code === 'ENOENT') {
+        users = [];
+    } else {
+        users = JSON.parse(data);
+    }
+});
+
 const projects = [
-    { name: "مشروع 1", thumbnail: "Img/L1.jpg", projectUrl: "Project/L1.zip" },
-    { name: "مشروع 2", thumbnail: "Img/L2.jpg", projectUrl: "Project/L2.zip" },
-    { name: "مشروع 3", thumbnail: "Img/L3.jpg", projectUrl: "Project/L3.zip" },
-    { name: "مشروع 4", thumbnail: "Img/L4.jpg", projectUrl: "Project/L4.zip" },
-    { name: "مشروع 5", thumbnail: "Img/L5.jpg", projectUrl: "Project/L5.zip" },
-    { name: "مشروع 6", thumbnail: "Img/L6.jpg", projectUrl: "Project/L6.zip" },
-    { name: "مشروع 7", thumbnail: "Img/L7.jpg", projectUrl: "Project/L7.zip" },
-    { name: "مشروع 8", thumbnail: "Img/L8.jpg", projectUrl: "Project/L8.zip" },
-    { name: "مشروع 9", thumbnail: "Img/L9.jpg", projectUrl: "Project/L9.zip" },
-    // أضف المزيد من المشاريع هنا كما تريد
+    { name: "مشروع 1", thumbnail: "Img/L1.jpg", projectUrl: "Project/L1.zip", rating: 0 },
+    { name: "مشروع 2", thumbnail: "Img/L2.jpg", projectUrl: "Project/L2.zip", rating: 0 },
+    { name: "مشروع 3", thumbnail: "Img/L3.jpg", projectUrl: "Project/L3.zip", rating: 0 },
+    { name: "مشروع 4", thumbnail: "Img/L4.jpg", projectUrl: "Project/L4.zip", rating: 0 },
+    { name: "مشروع 5", thumbnail: "Img/L5.jpg", projectUrl: "Project/L5.zip", rating: 0 },
+    { name: "مشروع 6", thumbnail: "Img/L6.jpg", projectUrl: "Project/L6.zip", rating: 0 },
+    { name: "مشروع 7", thumbnail: "Img/L7.jpg", projectUrl: "Project/L7.zip", rating: 0 },
+    { name: "مشروع 8", thumbnail: "Img/L8.jpg", projectUrl: "Project/L8.zip", rating: 0 },
+    { name: "مشروع 9", thumbnail: "Img/L9.jpg", projectUrl: "Project/L9.zip", rating: 0 },
 ];
 
-// تعريف التطبيقات الثابتة ومساراتها
 const apps = [
-    { name: "Pixellab", thumbnail: "A2.jpg", appUrl: "Apps/A2.zip" },
-    { name: "PS tuch", thumbnail: "photo/A3.jpg", appUrl: "Apps/A3.zip" },
-    // أضف المزيد من التطبيقات هنا كما تريد
+    { name: "PicsArt", thumbnail: "A1.jpg", appUrl: "Apps/A1.zip", rating: 0 },
+    { name: "Pixellab", thumbnail: "A2.jpg", appUrl: "Apps/A2.zip", rating: 0 },
+    { name: "PS tuch", thumbnail: "A3.jpg", appUrl: "Apps/A3.zip", rating: 0 },
+    { name: "تطبيق 4", thumbnail: "A4.jpg", appUrl: "Apps/A4.zip", rating: 0 },
 ];
 
-// تعريف الأخبار الثابتة
-const news = [
-    { title: "الموقع قيد التطوير...", content: "فيديو يشرح كيف تستخدم المشارع ", media: "photo/Example.mp4" },
-    { title: "مشاريع تصميم بكسلاب", content: "" },
-    { title: "فيديو شرح للموقع قريبا...", content: "", media: "" },
-    // أضف المزيد من الأخبار هنا كما تريد
-];
+function saveUsers() {
+    fs.writeFile('users.json', JSON.stringify(users), (err) => {
+        if (err) throw err;
+    });
+}
 
-// تعريف الإعلانات الثابتة
-const ads = [
-    { title: "لا توجد اعلانات حاليا", content: "" },
-    { title: "", content: "", media: "" },
-    { title: "", content: "", media: "" },
-    // أضف المزيد من الإعلانات هنا كما تريد
-];
+function saveRatings() {
+    fs.writeFile('ratings.json', JSON.stringify({ projects, apps }), (err) => {
+        if (err) throw err;
+    });
+}
 
-// التحقق من تسجيل الدخول كأدمن
+function registerUser() {
+    const username = document.getElementById('reg-username').value;
+    const password = document.getElementById('reg-password').value;
+    const user = { username, password };
+
+    users.push(user);
+    saveUsers();
+    alert('تم إنشاء الحساب بنجاح');
+}
+
+function loginUser() {
+    const username = document.getElementById('login-username').value;
+    const password = document.getElementById('login-password').value;
+
+    const user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+        currentUser = user;
+        alert('تم تسجيل الدخول بنجاح');
+        document.getElementById('user-section').style.display = 'none';
+    } else {
+        alert('اسم المستخدم أو كلمة السر غير صحيحة');
+    }
+}
+
 function loginAdmin() {
-    const enteredUsername = document.getElementById('username').value;
-    const enteredPassword = document.getElementById('password').value;
+    const enteredUsername = document.getElementById('admin-username').value;
+    const enteredPassword = document.getElementById('admin-password').value;
 
-    if (enteredUsername === username && enteredPassword === password) {
+    if (enteredUsername === "admin" && enteredPassword === "12345") {
         adminLoggedIn = true;
         document.getElementById('admin-controls').style.display = 'block';
         document.getElementById('admin-login-form').style.display = 'none';
@@ -53,7 +81,6 @@ function loginAdmin() {
     }
 }
 
-// إضافة المشروع إلى المعرض
 function addProjectToGallery(project) {
     const gallery = document.getElementById('projects-gallery');
     const projectElement = document.createElement('div');
@@ -62,11 +89,17 @@ function addProjectToGallery(project) {
         <img src="${project.thumbnail}" alt="${project.name}">
         <a href="${project.projectUrl}" download="${project.name}">تحميل المشروع</a>
         <button onclick="deleteProject(this, '${project.name}')">حذف المشروع</button>
+        <div class="rating">
+            <span class="star" data-value="5" onclick="rateProject('${project.name}', 5)">&#9733;</span>
+            <span class="star" data-value="4" onclick="rateProject('${project.name}', 4)">&#9733;</span>
+            <span class="star" data-value="3" onclick="rateProject('${project.name}', 3)">&#9733;</span>
+            <span class="star" data-value="2" onclick="rateProject('${project.name}', 2)">&#9733;</span>
+            <span class="star" data-value="1" onclick="rateProject('${project.name}', 1)">&#9733;</span>
+        </div>
     `;
     gallery.appendChild(projectElement);
 }
 
-// إضافة التطبيق إلى المعرض
 function addAppToGallery(app) {
     const gallery = document.getElementById('apps-gallery');
     const appElement = document.createElement('div');
@@ -75,61 +108,17 @@ function addAppToGallery(app) {
         <img src="${app.thumbnail}" alt="${app.name}">
         <a href="${app.appUrl}" download="${app.name}">تحميل التطبيق</a>
         <button onclick="deleteApp(this, '${app.name}')">حذف التطبيق</button>
+        <div class="rating">
+            <span class="star" data-value="5" onclick="rateApp('${app.name}', 5)">&#9733;</span>
+            <span class="star" data-value="4" onclick="rateApp('${app.name}', 4)">&#9733;</span>
+            <span class="star" data-value="3" onclick="rateApp('${app.name}', 3)">&#9733;</span>
+            <span class="star" data-value="2" onclick="rateApp('${app.name}', 2)">&#9733;</span>
+            <span class="star" data-value="1" onclick="rateApp('${app.name}', 1)">&#9733;</span>
+        </div>
     `;
     gallery.appendChild(appElement);
 }
 
-// إضافة الخبر إلى المعرض
-function addNewsToGallery(newsItem) {
-    const gallery = document.getElementById('news-gallery');
-    const newsElement = document.createElement('div');
-    newsElement.className = 'news-item';
-    newsElement.innerHTML = `
-        <h3>${newsItem.title}</h3>
-        <p>${newsItem.content}</p>
-        ${newsItem.media.endsWith('.mp4') ? `<video controls src="${newsItem.media}"></video>` : `<img src="${newsItem.media}" alt="${newsItem.title}">`}
-    `;
-    gallery.appendChild(newsElement);
-}
-
-// إضافة الإعلان إلى المعرض
-function addAdToGallery(adItem) {
-    const gallery = document.getElementById('ads-gallery');
-    const adElement = document.createElement('div');
-    adElement.className = 'ad-item';
-    adElement.innerHTML = `
-        <h3>${adItem.title}</h3>
-        <p>${adItem.content}</p>
-        ${adItem.media.endsWith('.mp4') ? `<video controls src="${adItem.media}"></video>` : `<img src="${adItem.media}" alt="${adItem.title}">`}
-    `;
-    gallery.appendChild(adElement);
-}
-
-// حذف جميع المشاريع من المعرض
-function deleteProjects() {
-    if (!adminLoggedIn) {
-        alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
-        return;
-    }
-    const gallery = document.getElementById('projects-gallery');
-    while (gallery.firstChild) {
-        gallery.removeChild(gallery.firstChild);
-    }
-}
-
-// حذف جميع التطبيقات من المعرض
-function deleteApps() {
-    if (!adminLoggedIn) {
-        alert('يجب تسجيل الدخول كأدمن لحذف التطبيقات');
-        return;
-    }
-    const gallery = document.getElementById('apps-gallery');
-    while (gallery.firstChild) {
-        gallery.removeChild(gallery.firstChild);
-    }
-}
-
-// حذف مشروع معين من المعرض
 function deleteProject(button, projectName) {
     if (!adminLoggedIn) {
         alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
@@ -139,7 +128,6 @@ function deleteProject(button, projectName) {
     projectElement.remove();
 }
 
-// حذف تطبيق معين من المعرض
 function deleteApp(button, appName) {
     if (!adminLoggedIn) {
         alert('يجب تسجيل الدخول كأدمن لحذف التطبيقات');
@@ -149,38 +137,25 @@ function deleteApp(button, appName) {
     appElement.remove();
 }
 
-// إظهار الأقسام المختلفة
-function showSection(sectionId) {
-    const sections = document.querySelectorAll('.section');
-    sections.forEach(section => {
-        section.style.display = section.id === sectionId ? 'block' : 'none';
-    });
+function rateProject(projectName, rating) {
+    const project = projects.find(p => p.name === projectName);
+    if (project) {
+        project.rating = rating;
+        saveRatings();
+        alert(`تم تقييم المشروع بـ ${rating} نجوم`);
+    }
 }
 
-// استرجاع المشاريع عند تحميل الصفحة
-function loadProjects() {
-    projects.forEach(project => addProjectToGallery(project));
+function rateApp(appName, rating) {
+    const app = apps.find(a => a.name === appName);
+    if (app) {
+        app.rating = rating;
+        saveRatings();
+        alert(`تم تقييم التطبيق بـ ${rating} نجوم`);
+    }
 }
 
-// استرجاع التطبيقات عند تحميل الصفحة
-function loadApps() {
-    apps.forEach(app => addAppToGallery(app));
-}
-
-// استرجاع الأخبار عند تحميل الصفحة
-function loadNews() {
-    news.forEach(newsItem => addNewsToGallery(newsItem));
-}
-
-// استرجاع الإعلانات عند تحميل الصفحة
-function loadAds() {
-    ads.forEach(adItem => addAdToGallery(adItem));
-}
-
-// تحميل المحتوى عند تحميل الصفحة
 window.onload = () => {
-    loadProjects();
-    loadApps();
-    loadNews();
-    loadAds();
+    projects.forEach(project => addProjectToGallery(project));
+    apps.forEach(app => addAppToGallery(app));
 };
