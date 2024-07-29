@@ -1,64 +1,46 @@
 let adminLoggedIn = false;
 const username = "admin";
 const password = "12345";
+let users = JSON.parse(localStorage.getItem('users')) || [];
+let comments = JSON.parse(localStorage.getItem('comments')) || {};
 
-// تعريف المشاريع الثابتة ومساراتها
+// تعريف مشروع نموذجي واحد فقط (يمكنك إضافة المزيد بنفس الطريقة)
 const projects = [
-    { name: "مشروع 1", thumbnail: "Img/L1.jpg", projectUrl: "Project/L1.zip" },
-    { name: "مشروع 2", thumbnail: "Img/L2.jpg", projectUrl: "Project/L2.zip" },
-    { name: "مشروع 3", thumbnail: "Img/L3.jpg", projectUrl: "Project/L3.zip" },
-    { name: "مشروع 4", thumbnail: "Img/L4.jpg", projectUrl: "Project/L4.zip" },
-    { name: "مشروع 5", thumbnail: "Img/L5.jpg", projectUrl: "Project/L5.zip" },
-    { name: "مشروع 6", thumbnail: "Img/L6.jpg", projectUrl: "Project/L6.zip" },
-    { name: "مشروع 7", thumbnail: "Img/L7.jpg", projectUrl: "Project/L7.zip" },
-    { name: "مشروع 8", thumbnail: "Img/L8.jpg", projectUrl: "Project/L8.zip" },
-    { name: "مشروع 9", thumbnail: "Img/L9.jpg", projectUrl: "Project/L9.zip" },
-    // أضف المزيد من المشاريع هنا كما تريد
+    { name: "مشروع نموذجي", thumbnail: "Img/L1.jpg", projectUrl: "Project/L1.zip" }
 ];
 
-// تعريف التطبيقات الثابتة ومساراتها
+// تعريف التطبيقات الثابتة (يمكنك إضافة المزيد حسب الحاجة)
 const apps = [
     { name: "تطبيق 1", thumbnail: "Img/A1.jpg", appUrl: "App/A1.zip" },
-    { name: "تطبيق 2", thumbnail: "Img/A2.jpg", appUrl: "App/A2.zip" },
-    { name: "تطبيق 3", thumbnail: "Img/A3.jpg", appUrl: "App/A3.zip" },
-    { name: "تطبيق 4", thumbnail: "Img/A4.jpg", appUrl: "App/A4.zip" },
-    { name: "تطبيق 5", thumbnail: "Img/A5.jpg", appUrl: "App/A5.zip" },
-    // أضف المزيد من التطبيقات هنا كما تريد
 ];
 
-// تعريف الأخبار الثابتة
+// تعريف الأخبار الثابتة (يمكنك إضافة المزيد حسب الحاجة)
 const news = [
     { title: "خبر 1", thumbnail: "Img/N1.jpg", description: "وصف الخبر 1" },
-    { title: "خبر 2", thumbnail: "Img/N2.jpg", description: "وصف الخبر 2" },
-    { title: "خبر 3", thumbnail: "Img/N3.jpg", description: "وصف الخبر 3" },
-    // أضف المزيد من الأخبار هنا كما تريد
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    if (adminLoggedIn) {
+    // عرض القسم الافتراضي عند تحميل الصفحة
+    showSection('projects');
+
+    // تسجيل الدخول إذا كان المستخدم قد سجل الدخول مسبقاً
+    const storedAdminLoggedIn = localStorage.getItem('adminLoggedIn');
+    if (storedAdminLoggedIn === 'true') {
+        adminLoggedIn = true;
         document.getElementById('loginForm').style.display = 'none';
-        renderProjects();
-        renderApps();
-        renderNews();
     }
-
-    const stars = document.querySelectorAll('.star-rating .fa-star');
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const rating = star.getAttribute('data-value');
-            setRating(rating, star.parentElement);
-        });
-
-        star.addEventListener('mouseover', () => {
-            const rating = star.getAttribute('data-value');
-            highlightStars(rating, star.parentElement);
-        });
-
-        star.addEventListener('mouseout', () => {
-            resetStars(star.parentElement);
-        });
-    });
+    renderProjects();
+    renderApps();
+    renderNews();
+    renderComments();
 });
+
+function showSection(section) {
+    const sections = ['projects', 'apps', 'news', 'comments'];
+    sections.forEach(sec => {
+        document.getElementById(`${sec}Container`).style.display = sec === section ? 'block' : 'none';
+    });
+}
 
 function login() {
     const inputUsername = document.getElementById('username').value;
@@ -66,10 +48,9 @@ function login() {
 
     if (inputUsername === username && inputPassword === password) {
         adminLoggedIn = true;
+        localStorage.setItem('adminLoggedIn', 'true');
         document.getElementById('loginForm').style.display = 'none';
-        renderProjects();
-        renderApps();
-        renderNews();
+        renderComments();
     } else {
         alert('اسم المستخدم أو كلمة المرور غير صحيحة');
     }
@@ -104,10 +85,41 @@ function renderProjects() {
             starRatingDiv.appendChild(star);
         }
 
+        const commentsDiv = document.createElement('div');
+        commentsDiv.classList.add('comments');
+
+        if (adminLoggedIn) {
+            const commentForm = document.createElement('div');
+            commentForm.classList.add('comment-form');
+            const commentInput = document.createElement('input');
+            commentInput.type = 'text';
+            commentInput.placeholder = 'أضف تعليق...';
+            const commentButton = document.createElement('button');
+            commentButton.innerText = 'إرسال';
+            commentButton.onclick = () => addComment(project.name, commentInput.value);
+            commentForm.appendChild(commentInput);
+            commentForm.appendChild(commentButton);
+
+            commentsDiv.appendChild(commentForm);
+        }
+
+        const commentList = document.createElement('div');
+        commentList.classList.add('comment-list');
+        const projectComments = comments[project.name] || [];
+        projectComments.forEach(comment => {
+            const commentDiv = document.createElement('div');
+            commentDiv.classList.add('comment');
+            commentDiv.innerText = comment;
+            commentList.appendChild(commentDiv);
+        });
+
+        commentsDiv.appendChild(commentList);
+
         projectDiv.appendChild(projectImage);
         projectDiv.appendChild(projectTitle);
         projectDiv.appendChild(projectLink);
         projectDiv.appendChild(starRatingDiv);
+        projectDiv.appendChild(commentsDiv);
         projectsContainer.appendChild(projectDiv);
     });
 }
@@ -174,37 +186,87 @@ function renderNews() {
     });
 }
 
-function setRating(rating, parentElement) {
-    const stars = parentElement.querySelectorAll('.fa-star');
-    stars.forEach(star => {
-        star.classList.remove('selected');
-    });
-    for (let i = 0; i < rating; i++) {
-        stars[i].classList.add('selected');
+function renderComments() {
+    const commentsContainer = document.getElementById('commentsContainer');
+    commentsContainer.innerHTML = '';
+
+    if (!adminLoggedIn) {
+        commentsContainer.innerHTML = '<p>يجب تسجيل الدخول لعرض التعليقات.</p>';
+        return;
     }
-    saveRating(rating, parentElement);
+
+    projects.forEach(project => {
+        const commentsDiv = document.createElement('div');
+        commentsDiv.classList.add('comments');
+
+        const commentForm = document.createElement('div');
+        commentForm.classList.add('comment-form');
+        const commentInput = document.createElement('input');
+        commentInput.type = 'text';
+        commentInput.placeholder = 'أضف تعليق...';
+        const commentButton = document.createElement('button');
+        commentButton.innerText = 'إرسال';
+        commentButton.onclick = () => addComment(project.name, commentInput.value);
+        commentForm.appendChild(commentInput);
+        commentForm.appendChild(commentButton);
+
+        commentsDiv.appendChild(commentForm);
+
+        const commentList = document.createElement('div');
+        commentList.classList.add('comment-list');
+        const projectComments = comments[project.name] || [];
+        projectComments.forEach(comment => {
+            const commentDiv = document.createElement('div');
+            commentDiv.classList.add('comment');
+            commentDiv.innerText = comment;
+            commentList.appendChild(commentDiv);
+        });
+
+        commentsDiv.appendChild(commentList);
+        commentsContainer.appendChild(commentsDiv);
+    });
 }
 
-function highlightStars(rating, parentElement) {
-    const stars = parentElement.querySelectorAll('.fa-star');
-    stars.forEach(star => {
-        star.classList.remove('highlight');
-    });
-    for (let i = 0; i < rating; i++) {
-        stars[i].classList.add('highlight');
+function addComment(projectName, comment) {
+    if (!comment.trim()) {
+        alert('التعليق لا يمكن أن يكون فارغاً');
+        return;
     }
+
+    if (!comments[projectName]) {
+        comments[projectName] = [];
+    }
+
+    comments[projectName].push(comment);
+    localStorage.setItem('comments', JSON.stringify(comments));
+    renderComments();
 }
 
-function resetStars(parentElement) {
-    const stars = parentElement.querySelectorAll('.fa-star');
+function setRating(rating, container) {
+    const stars = container.querySelectorAll('.fa-star');
     stars.forEach(star => {
-        star.classList.remove('highlight');
+        if (parseInt(star.getAttribute('data-value')) <= rating) {
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
     });
 }
 
-function saveRating(rating, parentElement) {
-    const itemName = parentElement.closest('.project, .app').querySelector('h2').innerText;
-    const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
-    ratings[itemName] = rating;
-    localStorage.setItem('ratings', JSON.stringify(ratings));
+function highlightStars(rating, container) {
+    const stars = container.querySelectorAll('.fa-star');
+    stars.forEach(star => {
+        if (parseInt(star.getAttribute('data-value')) <= rating) {
+            star.classList.add('hover');
+        } else {
+            star.classList.remove('hover');
+        }
+    });
+}
+
+function resetStars(container) {
+    const stars = container.querySelectorAll('.fa-star');
+    stars.forEach(star => {
+        star.classList.remove('hover');
+    });
 }
