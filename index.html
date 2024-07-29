@@ -1,59 +1,141 @@
 <!DOCTYPE html>
+
 <html lang="ar">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>متجر بكسلاب</title>
+
     <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kufam:ital,wght@0,400..900;1,400..900&display=swap">
+
+    <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+
+
+
     <!-- Google tag (gtag.js) -->
+
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKS96PHH82"></script>
+
     <script>
+
       window.dataLayer = window.dataLayer || [];
+
       function gtag(){dataLayer.push(arguments);}
+
       gtag('js', new Date());
+
+
+
       gtag('config', 'G-SKS96PHH82');
+
     </script>
+
+
+
 </head>
+
 <body>
+
     <div class="container">
+
         <div class="header">
+
             <img src="photo/logo.png" alt="Logo" class="logo">
+
             <h1>متجر بكسلاب</h1>
+
             <img src="photo/logo.png" alt="Logo" class="logo">
+
         </div>
 
-        <div class="navigation">
-            <button onclick="showSection('projects')">المشاريع</button>
-            <button onclick="showSection('apps')">التطبيقات</button>
-            <button onclick="showSection('news')">الأخبار</button>
-            <button onclick="showSection('comments')">التعليقات</button>
+        <nav class="navbar">
+
+            <ul>
+
+                <li><a href="#" onclick="showSection('projects-section')">المشاريع</a></li>
+
+                <li><a href="#" onclick="showSection('news-section')">الأخبار</a></li>
+
+                <li><a href="#" onclick="showSection('apps-section')">التطبيقات</a></li>
+
+                <li><a href="#" onclick="showSection('ads-section')">الإعلانات</a></li>
+
+            </ul>
+
+        </nav>
+
+        <div id="admin-section">
+
+            <h2>تسجيل دخول الأدمن</h2>
+
+            <form id="admin-login-form">
+
+                <input type="text" id="username" placeholder="اسم المستخدم">
+
+                <input type="password" id="password" placeholder="كلمة السر">
+
+                <button type="button" onclick="loginAdmin()">تسجيل دخول</button>
+
+            </form>
+
+            <div id="admin-controls" style="display:none;">
+
+                <h2>إدارة المشاريع</h2>
+
+                <button type="button" onclick="deleteProjects()">حذف جميع المشاريع</button>
+
+                <h2>إدارة التطبيقات</h2>
+
+                <button type="button" onclick="deleteApps()">حذف جميع التطبيقات</button>
+
+            </div>
+
         </div>
 
-        <div class="login-form" id="loginForm">
-            <h2>تسجيل الدخول</h2>
-            <input type="text" id="username" placeholder="اسم المستخدم">
-            <input type="password" id="password" placeholder="كلمة المرور">
-            <button onclick="login()">تسجيل الدخول</button>
+        <div id="content">
+
+            <div id="projects-section" class="section">
+
+                <h2>مشاريع المتجر</h2>
+
+                <div id="projects-gallery"></div>
+
+            </div>
+
+            <div id="news-section" class="section" style="display: none;">
+
+                <h2>الأخبار</h2>
+
+                <div id="news-gallery"></div>
+
+            </div>
+
+            <div id="apps-section" class="section" style="display: none;">
+
+                <h2>تطبيقات المتجر</h2>
+
+                <div id="apps-gallery"></div>
+
+            </div>
+
+            <div id="ads-section" class="section" style="display: none;">
+
+                <h2>الإعلانات</h2>
+
+                <div id="ads-gallery"></div>
+
+            </div>
+
         </div>
 
-        <div id="projectsContainer" class="section">
-            <!-- المشاريع ستظهر هنا -->
-        </div>
-
-        <div id="appsContainer" class="section" style="display:none;">
-            <!-- التطبيقات ستظهر هنا -->
-        </div>
-
-        <div id="newsContainer" class="section" style="display:none;">
-            <!-- الأخبار ستظهر هنا -->
-        </div>
-
-        <div id="commentsContainer" class="section" style="display:none;">
-            <!-- التعليقات ستظهر هنا -->
-        </div>
     </div>
+
     <script src="scripts.js"></script>
+
 </body>
+
 </html>
