@@ -59,12 +59,12 @@ body {
     font-size: 16px;
 }
 
-/* Project Styles */
-.projects-container {
+/* Projects, Apps, and News Container Styles */
+.projects-container, .apps-container, .news-container {
     margin-top: 20px;
 }
 
-.project {
+.project, .app, .news {
     margin-top: 20px;
     background-color: #1f1f1f;
     padding: 20px;
@@ -73,13 +73,20 @@ body {
     text-align: center;
 }
 
-.project img {
+.project img, .app img, .news img {
     max-width: 100%;
     border-radius: 10px;
 }
 
-.project h2 {
+.project h2, .app h2, .news h2 {
     margin: 10px 0;
+}
+
+.download-link {
+    display: block;
+    margin-top: 10px;
+    color: #ffd700;
+    text-decoration: none;
 }
 
 .star-rating {
