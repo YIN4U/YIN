@@ -16,17 +16,33 @@ const projects = [
     // أضف المزيد من المشاريع هنا كما تريد
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-    const loginForm = document.getElementById('loginForm');
-    const projectsContainer = document.getElementById('projectsContainer');
-    
-    if (adminLoggedIn) {
-        loginForm.style.display = 'none';
-        renderProjects();
-    }
-    
-    const stars = document.querySelectorAll('.star-rating .fa-star');
+// تعريف التطبيقات الثابتة ومساراتها
+const apps = [
+    { name: "تطبيق 1", thumbnail: "Img/A1.jpg", appUrl: "App/A1.zip" },
+    { name: "تطبيق 2", thumbnail: "Img/A2.jpg", appUrl: "App/A2.zip" },
+    { name: "تطبيق 3", thumbnail: "Img/A3.jpg", appUrl: "App/A3.zip" },
+    { name: "تطبيق 4", thumbnail: "Img/A4.jpg", appUrl: "App/A4.zip" },
+    { name: "تطبيق 5", thumbnail: "Img/A5.jpg", appUrl: "App/A5.zip" },
+    // أضف المزيد من التطبيقات هنا كما تريد
+];
 
+// تعريف الأخبار الثابتة
+const news = [
+    { title: "خبر 1", thumbnail: "Img/N1.jpg", description: "وصف الخبر 1" },
+    { title: "خبر 2", thumbnail: "Img/N2.jpg", description: "وصف الخبر 2" },
+    { title: "خبر 3", thumbnail: "Img/N3.jpg", description: "وصف الخبر 3" },
+    // أضف المزيد من الأخبار هنا كما تريد
+];
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (adminLoggedIn) {
+        document.getElementById('loginForm').style.display = 'none';
+        renderProjects();
+        renderApps();
+        renderNews();
+    }
+
+    const stars = document.querySelectorAll('.star-rating .fa-star');
     stars.forEach(star => {
         star.addEventListener('click', () => {
             const rating = star.getAttribute('data-value');
@@ -52,6 +68,8 @@ function login() {
         adminLoggedIn = true;
         document.getElementById('loginForm').style.display = 'none';
         renderProjects();
+        renderApps();
+        renderNews();
     } else {
         alert('اسم المستخدم أو كلمة المرور غير صحيحة');
     }
@@ -81,92 +99,112 @@ function renderProjects() {
         starRatingDiv.classList.add('star-rating');
         for (let i = 1; i <= 5; i++) {
             const star = document.createElement('i');
-            star.classList.add('fas', 'fa-star');
+            star.classList.add('fa', 'fa-star');
             star.setAttribute('data-value', i);
             starRatingDiv.appendChild(star);
         }
 
         projectDiv.appendChild(projectImage);
         projectDiv.appendChild(projectTitle);
-        projectDiv.appendChild(starRatingDiv);
         projectDiv.appendChild(projectLink);
-
+        projectDiv.appendChild(starRatingDiv);
         projectsContainer.appendChild(projectDiv);
     });
-
-    const stars = document.querySelectorAll('.star-rating .fa-star');
-
-    stars.forEach(star => {
-        star.addEventListener('click', () => {
-            const rating = star.getAttribute('data-value');
-            setRating(rating, star.parentElement);
-        });
-
-        star.addEventListener('mouseover', () => {
-            const rating = star.getAttribute('data-value');
-            highlightStars(rating, star.parentElement);
-        });
-
-        star.addEventListener('mouseout', () => {
-            resetStars(star.parentElement);
-        });
-    });
-
-    // تحميل التقييمات المحفوظة وتطبيقها
-    loadRatings();
 }
 
-function setRating(rating, parent) {
-    const stars = parent.querySelectorAll('.fa-star');
-    const projectName = parent.previousElementSibling.innerText;
+function renderApps() {
+    const appsContainer = document.getElementById('appsContainer');
+    appsContainer.innerHTML = '';
 
-    stars.forEach(star => {
-        if (star.getAttribute('data-value') <= rating) {
-            star.classList.add('selected');
-        } else {
-            star.classList.remove('selected');
+    apps.forEach(app => {
+        const appDiv = document.createElement('div');
+        appDiv.classList.add('app');
+
+        const appImage = document.createElement('img');
+        appImage.src = app.thumbnail;
+        appImage.alt = app.name;
+
+        const appTitle = document.createElement('h2');
+        appTitle.innerText = app.name;
+
+        const appLink = document.createElement('a');
+        appLink.href = app.appUrl;
+        appLink.innerText = 'تحميل التطبيق';
+        appLink.classList.add('download-link');
+
+        const starRatingDiv = document.createElement('div');
+        starRatingDiv.classList.add('star-rating');
+        for (let i = 1; i <= 5; i++) {
+            const star = document.createElement('i');
+            star.classList.add('fa', 'fa-star');
+            star.setAttribute('data-value', i);
+            starRatingDiv.appendChild(star);
         }
-    });
 
-    // حفظ التقييم في localStorage
-    saveRating(projectName, rating);
+        appDiv.appendChild(appImage);
+        appDiv.appendChild(appTitle);
+        appDiv.appendChild(appLink);
+        appDiv.appendChild(starRatingDiv);
+        appsContainer.appendChild(appDiv);
+    });
 }
 
-function highlightStars(rating, parent) {
-    const stars = parent.querySelectorAll('.fa-star');
+function renderNews() {
+    const newsContainer = document.getElementById('newsContainer');
+    newsContainer.innerHTML = '';
 
+    news.forEach(item => {
+        const newsDiv = document.createElement('div');
+        newsDiv.classList.add('news');
+
+        const newsImage = document.createElement('img');
+        newsImage.src = item.thumbnail;
+        newsImage.alt = item.title;
+
+        const newsTitle = document.createElement('h2');
+        newsTitle.innerText = item.title;
+
+        const newsDescription = document.createElement('p');
+        newsDescription.innerText = item.description;
+
+        newsDiv.appendChild(newsImage);
+        newsDiv.appendChild(newsTitle);
+        newsDiv.appendChild(newsDescription);
+        newsContainer.appendChild(newsDiv);
+    });
+}
+
+function setRating(rating, parentElement) {
+    const stars = parentElement.querySelectorAll('.fa-star');
     stars.forEach(star => {
-        if (star.getAttribute('data-value') <= rating) {
-            star.classList.add('hover');
-        } else {
-            star.classList.remove('hover');
-        }
+        star.classList.remove('selected');
     });
+    for (let i = 0; i < rating; i++) {
+        stars[i].classList.add('selected');
+    }
+    saveRating(rating, parentElement);
 }
 
-function resetStars(parent) {
-    const stars = parent.querySelectorAll('.fa-star');
+function highlightStars(rating, parentElement) {
+    const stars = parentElement.querySelectorAll('.fa-star');
     stars.forEach(star => {
-        star.classList.remove('hover');
+        star.classList.remove('highlight');
+    });
+    for (let i = 0; i < rating; i++) {
+        stars[i].classList.add('highlight');
+    }
+}
+
+function resetStars(parentElement) {
+    const stars = parentElement.querySelectorAll('.fa-star');
+    stars.forEach(star => {
+        star.classList.remove('highlight');
     });
 }
 
-function saveRating(projectName, rating) {
-    let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
-    ratings[projectName] = rating;
+function saveRating(rating, parentElement) {
+    const itemName = parentElement.closest('.project, .app').querySelector('h2').innerText;
+    const ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    ratings[itemName] = rating;
     localStorage.setItem('ratings', JSON.stringify(ratings));
-}
-
-function loadRatings() {
-    let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
-    
-    Object.keys(ratings).forEach(projectName => {
-        const projectDivs = document.querySelectorAll('.project h2');
-        projectDivs.forEach(projectDiv => {
-            if (projectDiv.innerText === projectName) {
-                const rating = ratings[projectName];
-                setRating(rating, projectDiv.nextElementSibling);
-            }
-        });
-    });
 }
