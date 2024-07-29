@@ -3,120 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>متجر بكسلاب</title>
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Kufam:ital,wght@0,400..900;1,400..900&display=swap">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SKS96PHH82"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-SKS96PHH82');
+    </script>
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <div class="logo">متجر بكسلاب</div>
-            <nav class="navbar">
-                <ul>
-                    <li><a href="#">الرئيسية</a></li>
-                    <li><a href="#">المشاريع</a></li>
-                    <li><a href="#">التطبيقات</a></li>
-                    <li><a href="#">اتصل بنا</a></li>
-                </ul>
-            </nav>
-        </header>
-        
-        <div id="user-section" class="user-section">
-            <form id="register-form" class="register-form">
-                <h2>إنشاء حساب</h2>
-                <input type="text" id="reg-username" placeholder="اسم المستخدم">
-                <input type="password" id="reg-password" placeholder="كلمة السر">
-                <button type="button" onclick="registerUser()">إنشاء حساب</button>
-            </form>
-
-            <form id="login-form" class="login-form">
-                <h2>تسجيل الدخول</h2>
-                <input type="text" id="login-username" placeholder="اسم المستخدم">
-                <input type="password" id="login-password" placeholder="كلمة السر">
-                <button type="button" onclick="loginUser()">تسجيل دخول</button>
-            </form>
+        <div class="header">
+            <img src="photo/logo.png" alt="Logo" class="logo">
+            <h1>متجر بكسلاب</h1>
+            <img src="photo/logo.png" alt="Logo" class="logo">
         </div>
         
-        <div id="admin-section" class="admin-section" style="display:none;">
-            <form id="admin-login-form" class="admin-login-form">
-                <input type="text" id="admin-username" placeholder="اسم المستخدم">
-                <input type="password" id="admin-password" placeholder="كلمة السر">
-                <button type="button" onclick="loginAdmin()">تسجيل دخول كأدمن</button>
-            </form>
-
-            <div id="admin-controls" style="display:none;">
-                <h2>إدارة المشاريع</h2>
-                <button type="button" onclick="deleteProjects()">حذف جميع المشاريع</button>
-                <h2>إدارة التطبيقات</h2>
-                <button type="button" onclick="deleteApps()">حذف جميع التطبيقات</button>
-            </div>
+        <div class="login-form" id="loginForm">
+            <h2>تسجيل الدخول</h2>
+            <input type="text" id="username" placeholder="اسم المستخدم">
+            <input type="password" id="password" placeholder="كلمة المرور">
+            <button onclick="login()">تسجيل الدخول</button>
         </div>
 
-        <div id="content" class="content">
-            <div id="projects-section" class="section">
-                <h2>المشاريع</h2>
-                <div id="projects-gallery" class="gallery grid">
-                    <!-- أمثلة على الصور -->
-                    <div class="card">
-                        <img src="path/to/image1.jpg" alt="Project 1">
-                        <button>تحميل المشروع</button>
-                        <button>حذف المشروع</button>
-                        <div class="rating">
-                            <span class="star" data-value="5">&#9733;</span>
-                            <span class="star" data-value="4">&#9733;</span>
-                            <span class="star" data-value="3">&#9733;</span>
-                            <span class="star" data-value="2">&#9733;</span>
-                            <span class="star" data-value="1">&#9733;</span>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="path/to/image2.jpg" alt="Project 2">
-                        <button>تحميل المشروع</button>
-                        <button>حذف المشروع</button>
-                        <div class="rating">
-                            <span class="star" data-value="5">&#9733;</span>
-                            <span class="star" data-value="4">&#9733;</span>
-                            <span class="star" data-value="3">&#9733;</span>
-                            <span class="star" data-value="2">&#9733;</span>
-                            <span class="star" data-value="1">&#9733;</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="apps-section" class="section">
-                <h2>التطبيقات</h2>
-                <div id="apps-gallery" class="gallery grid">
-                    <!-- أمثلة على الصور -->
-                    <div class="card">
-                        <img src="path/to/image3.jpg" alt="App 1">
-                        <button>تحميل التطبيق</button>
-                        <button>حذف التطبيق</button>
-                        <div class="rating">
-                            <span class="star" data-value="5">&#9733;</span>
-                            <span class="star" data-value="4">&#9733;</span>
-                            <span class="star" data-value="3">&#9733;</span>
-                            <span class="star" data-value="2">&#9733;</span>
-                            <span class="star" data-value="1">&#9733;</span>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="path/to/image4.jpg" alt="App 2">
-                        <button>تحميل التطبيق</button>
-                        <button>حذف التطبيق</button>
-                        <div class="rating">
-                            <span class="star" data-value="5">&#9733;</span>
-                            <span class="star" data-value="4">&#9733;</span>
-                            <span class="star" data-value="3">&#9733;</span>
-                            <span class="star" data-value="2">&#9733;</span>
-                            <span class="star" data-value="1">&#9733;</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="projectsContainer" class="projects-container">
+            <!-- المشاريع ستظهر هنا -->
         </div>
     </div>
-
-    <script src="script.js"></script>
+    <script src="scripts.js"></script>
 </body>
 </html>
