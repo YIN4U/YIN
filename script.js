@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loginForm.style.display = 'none';
         renderProjects();
     }
-
+    
     const stars = document.querySelectorAll('.star-rating .fa-star');
 
     stars.forEach(star => {
@@ -111,10 +111,62 @@ function renderProjects() {
             resetStars(star.parentElement);
         });
     });
+
+    // تحميل التقييمات المحفوظة وتطبيقها
+    loadRatings();
 }
 
 function setRating(rating, parent) {
     const stars = parent.querySelectorAll('.fa-star');
+    const projectName = parent.previousElementSibling.innerText;
+
     stars.forEach(star => {
         if (star.getAttribute('data-value') <= rating) {
-            star.classList
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
+    });
+
+    // حفظ التقييم في localStorage
+    saveRating(projectName, rating);
+}
+
+function highlightStars(rating, parent) {
+    const stars = parent.querySelectorAll('.fa-star');
+
+    stars.forEach(star => {
+        if (star.getAttribute('data-value') <= rating) {
+            star.classList.add('hover');
+        } else {
+            star.classList.remove('hover');
+        }
+    });
+}
+
+function resetStars(parent) {
+    const stars = parent.querySelectorAll('.fa-star');
+    stars.forEach(star => {
+        star.classList.remove('hover');
+    });
+}
+
+function saveRating(projectName, rating) {
+    let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    ratings[projectName] = rating;
+    localStorage.setItem('ratings', JSON.stringify(ratings));
+}
+
+function loadRatings() {
+    let ratings = JSON.parse(localStorage.getItem('ratings')) || {};
+    
+    Object.keys(ratings).forEach(projectName => {
+        const projectDivs = document.querySelectorAll('.project h2');
+        projectDivs.forEach(projectDiv => {
+            if (projectDiv.innerText === projectName) {
+                const rating = ratings[projectName];
+                setRating(rating, projectDiv.nextElementSibling);
+            }
+        });
+    });
+}
