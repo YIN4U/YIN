@@ -1,5 +1,6 @@
+/* General Styles */
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Kufam', sans-serif;
     background-color: #121212; /* Dark background */
     color: #fff; /* White text */
     margin: 0;
@@ -14,6 +15,7 @@ body {
     padding: 20px;
 }
 
+/* Header Styles */
 .header {
     display: flex;
     justify-content: space-between;
@@ -25,196 +27,73 @@ body {
 }
 
 .header .logo {
-    font-size: 24px;
-    font-weight: bold;
+    /* Add your styles for the logo here */
 }
 
-.navbar ul {
+.login-form {
+    margin-top: 20px;
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.login-form input {
+    display: block;
+    margin: 10px auto;
+    padding: 10px;
+    width: 80%;
+    border: none;
+    border-radius: 5px;
+}
+
+.login-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffd700;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Project Styles */
+.projects-container {
+    margin-top: 20px;
+}
+
+.project {
+    margin-top: 20px;
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.project img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.project h2 {
+    margin: 10px 0;
+}
+
+.star-rating {
     display: flex;
-    list-style: none;
-    padding: 0;
-    margin: 0;
+    justify-content: center;
+    direction: ltr; /* Direction for the stars layout */
 }
 
-.navbar ul li {
-    margin: 0 10px;
-}
-
-.navbar ul li a {
-    text-decoration: none;
-    font-size: 18px;
-    color: #fff;
-}
-
-.navbar ul li a:hover {
-    color: #4caf50;
-}
-
-.admin-section {
-    background-color: #1f1f1f;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.admin-login-form input {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #4caf50;
-    border-radius: 5px;
-    background-color: #333;
-    color: #fff;
-}
-
-.admin-login-form button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4caf50;
-    color: #fff;
+.star-rating .fa-star {
+    color: #ddd;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: color 0.3s;
 }
 
-.admin-login-form button:hover {
-    background-color: #45a049;
-}
-
-#admin-controls h2 {
-    margin-top: 0;
-}
-
-#admin-controls button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4caf50;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-}
-
-#admin-controls button:hover {
-    background-color: #45a049;
-}
-
-.content {
-    background-color: #1f1f1f;
-    padding: 20px;
-    border-radius: 10px;
-    margin-top: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.section {
-    margin-bottom: 40px;
-}
-
-.section h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 24px;
-    color: #fff;
-}
-
-.gallery.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-    gap: 20px;
-}
-
-.card {
-    background-color: #252525;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    padding: 15px;
-    text-align: center;
-    transition: transform 0.3s, background-color 0.3s;
-}
-
-.card img {
-    width: 100%;
-    height: auto;
-    border-radius: 10px;
-    transition: transform 0.3s;
-}
-
-.card:hover {
-    transform: scale(1.05);
-    background-color: #333;
-}
-
-.card button {
-    margin-top: 10px;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    background-color: #4caf50;
-    color: #fff;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.card button:hover {
-    background-color: #45a049;
-}
-
-.card:nth-child(even) {
-    background-color: #1a1a1a;
-}
-
-.card:nth-child(odd) {
-    background-color: #2a2a2a;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .header {
-        flex-direction: column;
-        align-items: flex-start;
-    }
-
-    .navbar ul {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .navbar ul li {
-        width: 100%;
-        text-align: left;
-        margin: 5px 0;
-    }
-
-    .navbar ul li a {
-        padding: 10px;
-        display: block;
-        width: 100%;
-    }
-
-    .admin-section, .content {
-        padding: 10px;
-    }
-
-    .admin-login-form input, .admin-login-form button, #admin-controls button {
-        padding: 8px;
-    }
-}
-
-@media (max-width: 480px) {
-    .header .logo {
-        font-size: 20px;
-    }
-
-    .navbar ul li a {
-        font-size: 16px;
-    }
-
-    .section h2 {
-        font-size: 20px;
-    }
+.star-rating .fa-star.selected,
+.star-rating .fa-star:hover,
+.star-rating .fa-star:hover ~ .fa-star {
+    color: #ffd700;
 }
