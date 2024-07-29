@@ -27,7 +27,9 @@ body {
 }
 
 .header .logo {
-    /* Add your styles for the logo here */
+    width: 50px; /* Smaller logo */
+    height: 50px;
+    border-radius: 50%; /* Smooth edges */
 }
 
 .login-form {
