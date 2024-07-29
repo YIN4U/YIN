@@ -1,272 +1,188 @@
 let adminLoggedIn = false;
 const username = "admin";
 const password = "12345";
-let users = JSON.parse(localStorage.getItem('users')) || [];
-let comments = JSON.parse(localStorage.getItem('comments')) || {};
 
-// تعريف مشروع نموذجي واحد فقط (يمكنك إضافة المزيد بنفس الطريقة)
+// تعريف المشاريع الثابتة ومساراتها
 const projects = [
-    { name: "مشروع نموذجي", thumbnail: "Img/L1.jpg", projectUrl: "Project/L1.zip" }
+    { name: "مشروع 1", thumbnail: "Img/L1.jpg", projectUrl: "Project/L1.zip" },
+    { name: "مشروع 2", thumbnail: "Img/L2.jpg", projectUrl: "Project/L2.zip" },
+    { name: "مشروع 3", thumbnail: "Img/L3.jpg", projectUrl: "Project/L3.zip" },
+    { name: "مشروع 4", thumbnail: "Img/L4.jpg", projectUrl: "Project/L4.zip" },
+    { name: "مشروع 5", thumbnail: "Img/L5.jpg", projectUrl: "Project/L5.zip" },
+    { name: "مشروع 6", thumbnail: "Img/L6.jpg", projectUrl: "Project/L6.zip" },
+    { name: "مشروع 7", thumbnail: "Img/L7.jpg", projectUrl: "Project/L7.zip" },
+    { name: "مشروع 8", thumbnail: "Img/L8.jpg", projectUrl: "Project/L8.zip" },
+    { name: "مشروع 9", thumbnail: "Img/L9.jpg", projectUrl: "Project/L9.zip" },
+    // أضف المزيد من المشاريع هنا كما تريد
 ];
 
-// تعريف التطبيقات الثابتة (يمكنك إضافة المزيد حسب الحاجة)
+// تعريف التطبيقات الثابتة ومساراتها
 const apps = [
-    { name: "تطبيق 1", thumbnail: "Img/A1.jpg", appUrl: "App/A1.zip" },
+    { name: "PicsArt", thumbnail: "A1.jpg", appUrl: "Apps/A1.zip" },
+    { name: "Pixellab", thumbnail: "A2.jpg", appUrl: "Apps/A2.zip" },
+    { name: "PS tuch", thumbnail: "A3.jpg", appUrl: "Apps/A3.zip" },
+    { name: "تطبيق 4", thumbnail: "A4.jpg", appUrl: "Apps/A4.zip" },
+    // أضف المزيد من التطبيقات هنا كما تريد
 ];
 
-// تعريف الأخبار الثابتة (يمكنك إضافة المزيد حسب الحاجة)
+// تعريف الأخبار الثابتة
 const news = [
-    { title: "خبر 1", thumbnail: "Img/N1.jpg", description: "وصف الخبر 1" },
+    { title: "1", content: "الموقع قيد التطوير...", media: "news1.jpg" },
+    { title: "2", content: "لم يتم بعد اضافة تطبيق PicsArt", media: "news2.jpg" },
+    { title: "3", content: "هذا هو الخبر الثالث.", media: "photo/Example.mp4" },
+    // أضف المزيد من الأخبار هنا كما تريد
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-    // عرض القسم الافتراضي عند تحميل الصفحة
-    showSection('projects');
+// تعريف الإعلانات الثابتة
+const ads = [
+    { title: "إعلان 1", content: "هذا هو الإعلان الأول.", media: "ad1.jpg" },
+    { title: "إعلان 2", content: "هذا هو الإعلان الثاني.", media: "ad2.jpg" },
+    { title: "إعلان 3", content: "هذا هو الإعلان الثالث.", media: "ad3.mp4" },
+    // أضف المزيد من الإعلانات هنا كما تريد
+];
 
-    // تسجيل الدخول إذا كان المستخدم قد سجل الدخول مسبقاً
-    const storedAdminLoggedIn = localStorage.getItem('adminLoggedIn');
-    if (storedAdminLoggedIn === 'true') {
+// التحقق من تسجيل الدخول كأدمن
+function loginAdmin() {
+    const enteredUsername = document.getElementById('username').value;
+    const enteredPassword = document.getElementById('password').value;
+
+    if (enteredUsername === username && enteredPassword === password) {
         adminLoggedIn = true;
-        document.getElementById('loginForm').style.display = 'none';
-    }
-    renderProjects();
-    renderApps();
-    renderNews();
-    renderComments();
-});
-
-function showSection(section) {
-    const sections = ['projects', 'apps', 'news', 'comments'];
-    sections.forEach(sec => {
-        document.getElementById(`${sec}Container`).style.display = sec === section ? 'block' : 'none';
-    });
-}
-
-function login() {
-    const inputUsername = document.getElementById('username').value;
-    const inputPassword = document.getElementById('password').value;
-
-    if (inputUsername === username && inputPassword === password) {
-        adminLoggedIn = true;
-        localStorage.setItem('adminLoggedIn', 'true');
-        document.getElementById('loginForm').style.display = 'none';
-        renderComments();
+        document.getElementById('admin-controls').style.display = 'block';
+        document.getElementById('admin-login-form').style.display = 'none';
     } else {
-        alert('اسم المستخدم أو كلمة المرور غير صحيحة');
+        alert('اسم المستخدم أو كلمة السر غير صحيحة');
     }
 }
 
-function renderProjects() {
-    const projectsContainer = document.getElementById('projectsContainer');
-    projectsContainer.innerHTML = '';
-
-    projects.forEach(project => {
-        const projectDiv = document.createElement('div');
-        projectDiv.classList.add('project');
-
-        const projectImage = document.createElement('img');
-        projectImage.src = project.thumbnail;
-        projectImage.alt = project.name;
-
-        const projectTitle = document.createElement('h2');
-        projectTitle.innerText = project.name;
-
-        const projectLink = document.createElement('a');
-        projectLink.href = project.projectUrl;
-        projectLink.innerText = 'تحميل المشروع';
-        projectLink.classList.add('download-link');
-
-        const starRatingDiv = document.createElement('div');
-        starRatingDiv.classList.add('star-rating');
-        for (let i = 1; i <= 5; i++) {
-            const star = document.createElement('i');
-            star.classList.add('fa', 'fa-star');
-            star.setAttribute('data-value', i);
-            starRatingDiv.appendChild(star);
-        }
-
-        const commentsDiv = document.createElement('div');
-        commentsDiv.classList.add('comments');
-
-        if (adminLoggedIn) {
-            const commentForm = document.createElement('div');
-            commentForm.classList.add('comment-form');
-            const commentInput = document.createElement('input');
-            commentInput.type = 'text';
-            commentInput.placeholder = 'أضف تعليق...';
-            const commentButton = document.createElement('button');
-            commentButton.innerText = 'إرسال';
-            commentButton.onclick = () => addComment(project.name, commentInput.value);
-            commentForm.appendChild(commentInput);
-            commentForm.appendChild(commentButton);
-
-            commentsDiv.appendChild(commentForm);
-        }
-
-        const commentList = document.createElement('div');
-        commentList.classList.add('comment-list');
-        const projectComments = comments[project.name] || [];
-        projectComments.forEach(comment => {
-            const commentDiv = document.createElement('div');
-            commentDiv.classList.add('comment');
-            commentDiv.innerText = comment;
-            commentList.appendChild(commentDiv);
-        });
-
-        commentsDiv.appendChild(commentList);
-
-        projectDiv.appendChild(projectImage);
-        projectDiv.appendChild(projectTitle);
-        projectDiv.appendChild(projectLink);
-        projectDiv.appendChild(starRatingDiv);
-        projectDiv.appendChild(commentsDiv);
-        projectsContainer.appendChild(projectDiv);
-    });
+// إضافة المشروع إلى المعرض
+function addProjectToGallery(project) {
+    const gallery = document.getElementById('projects-gallery');
+    const projectElement = document.createElement('div');
+    projectElement.className = 'project-thumbnail';
+    projectElement.innerHTML = `
+        <img src="${project.thumbnail}" alt="${project.name}">
+        <a href="${project.projectUrl}" download="${project.name}">تحميل المشروع</a>
+        <button onclick="deleteProject(this, '${project.name}')">حذف المشروع</button>
+    `;
+    gallery.appendChild(projectElement);
 }
 
-function renderApps() {
-    const appsContainer = document.getElementById('appsContainer');
-    appsContainer.innerHTML = '';
-
-    apps.forEach(app => {
-        const appDiv = document.createElement('div');
-        appDiv.classList.add('app');
-
-        const appImage = document.createElement('img');
-        appImage.src = app.thumbnail;
-        appImage.alt = app.name;
-
-        const appTitle = document.createElement('h2');
-        appTitle.innerText = app.name;
-
-        const appLink = document.createElement('a');
-        appLink.href = app.appUrl;
-        appLink.innerText = 'تحميل التطبيق';
-        appLink.classList.add('download-link');
-
-        const starRatingDiv = document.createElement('div');
-        starRatingDiv.classList.add('star-rating');
-        for (let i = 1; i <= 5; i++) {
-            const star = document.createElement('i');
-            star.classList.add('fa', 'fa-star');
-            star.setAttribute('data-value', i);
-            starRatingDiv.appendChild(star);
-        }
-
-        appDiv.appendChild(appImage);
-        appDiv.appendChild(appTitle);
-        appDiv.appendChild(appLink);
-        appDiv.appendChild(starRatingDiv);
-        appsContainer.appendChild(appDiv);
-    });
+// إضافة التطبيق إلى المعرض
+function addAppToGallery(app) {
+    const gallery = document.getElementById('apps-gallery');
+    const appElement = document.createElement('div');
+    appElement.className = 'project-thumbnail';
+    appElement.innerHTML = `
+        <img src="${app.thumbnail}" alt="${app.name}">
+        <a href="${app.appUrl}" download="${app.name}">تحميل التطبيق</a>
+        <button onclick="deleteApp(this, '${app.name}')">حذف التطبيق</button>
+    `;
+    gallery.appendChild(appElement);
 }
 
-function renderNews() {
-    const newsContainer = document.getElementById('newsContainer');
-    newsContainer.innerHTML = '';
-
-    news.forEach(item => {
-        const newsDiv = document.createElement('div');
-        newsDiv.classList.add('news');
-
-        const newsImage = document.createElement('img');
-        newsImage.src = item.thumbnail;
-        newsImage.alt = item.title;
-
-        const newsTitle = document.createElement('h2');
-        newsTitle.innerText = item.title;
-
-        const newsDescription = document.createElement('p');
-        newsDescription.innerText = item.description;
-
-        newsDiv.appendChild(newsImage);
-        newsDiv.appendChild(newsTitle);
-        newsDiv.appendChild(newsDescription);
-        newsContainer.appendChild(newsDiv);
-    });
+// إضافة الخبر إلى المعرض
+function addNewsToGallery(newsItem) {
+    const gallery = document.getElementById('news-gallery');
+    const newsElement = document.createElement('div');
+    newsElement.className = 'news-item';
+    newsElement.innerHTML = `
+        <h3>${newsItem.title}</h3>
+        <p>${newsItem.content}</p>
+        ${newsItem.media.endsWith('.mp4') ? `<video controls src="${newsItem.media}"></video>` : `<img src="${newsItem.media}" alt="${newsItem.title}">`}
+    `;
+    gallery.appendChild(newsElement);
 }
 
-function renderComments() {
-    const commentsContainer = document.getElementById('commentsContainer');
-    commentsContainer.innerHTML = '';
+// إضافة الإعلان إلى المعرض
+function addAdToGallery(adItem) {
+    const gallery = document.getElementById('ads-gallery');
+    const adElement = document.createElement('div');
+    adElement.className = 'ad-item';
+    adElement.innerHTML = `
+        <h3>${adItem.title}</h3>
+        <p>${adItem.content}</p>
+        ${adItem.media.endsWith('.mp4') ? `<video controls src="${adItem.media}"></video>` : `<img src="${adItem.media}" alt="${adItem.title}">`}
+    `;
+    gallery.appendChild(adElement);
+}
 
+// حذف جميع المشاريع من المعرض
+function deleteProjects() {
     if (!adminLoggedIn) {
-        commentsContainer.innerHTML = '<p>يجب تسجيل الدخول لعرض التعليقات.</p>';
+        alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
         return;
     }
-
-    projects.forEach(project => {
-        const commentsDiv = document.createElement('div');
-        commentsDiv.classList.add('comments');
-
-        const commentForm = document.createElement('div');
-        commentForm.classList.add('comment-form');
-        const commentInput = document.createElement('input');
-        commentInput.type = 'text';
-        commentInput.placeholder = 'أضف تعليق...';
-        const commentButton = document.createElement('button');
-        commentButton.innerText = 'إرسال';
-        commentButton.onclick = () => addComment(project.name, commentInput.value);
-        commentForm.appendChild(commentInput);
-        commentForm.appendChild(commentButton);
-
-        commentsDiv.appendChild(commentForm);
-
-        const commentList = document.createElement('div');
-        commentList.classList.add('comment-list');
-        const projectComments = comments[project.name] || [];
-        projectComments.forEach(comment => {
-            const commentDiv = document.createElement('div');
-            commentDiv.classList.add('comment');
-            commentDiv.innerText = comment;
-            commentList.appendChild(commentDiv);
-        });
-
-        commentsDiv.appendChild(commentList);
-        commentsContainer.appendChild(commentsDiv);
-    });
+    const gallery = document.getElementById('projects-gallery');
+    while (gallery.firstChild) {
+        gallery.removeChild(gallery.firstChild);
+    }
 }
 
-function addComment(projectName, comment) {
-    if (!comment.trim()) {
-        alert('التعليق لا يمكن أن يكون فارغاً');
+// حذف جميع التطبيقات من المعرض
+function deleteApps() {
+    if (!adminLoggedIn) {
+        alert('يجب تسجيل الدخول كأدمن لحذف التطبيقات');
         return;
     }
-
-    if (!comments[projectName]) {
-        comments[projectName] = [];
+    const gallery = document.getElementById('apps-gallery');
+    while (gallery.firstChild) {
+        gallery.removeChild(gallery.firstChild);
     }
-
-    comments[projectName].push(comment);
-    localStorage.setItem('comments', JSON.stringify(comments));
-    renderComments();
 }
 
-function setRating(rating, container) {
-    const stars = container.querySelectorAll('.fa-star');
-    stars.forEach(star => {
-        if (parseInt(star.getAttribute('data-value')) <= rating) {
-            star.classList.add('selected');
-        } else {
-            star.classList.remove('selected');
-        }
+// حذف مشروع معين من المعرض
+function deleteProject(button, projectName) {
+    if (!adminLoggedIn) {
+        alert('يجب تسجيل الدخول كأدمن لحذف المشاريع');
+        return;
+    }
+    const projectElement = button.parentElement;
+    projectElement.remove();
+}
+
+// حذف تطبيق معين من المعرض
+function deleteApp(button, appName) {
+    if (!adminLoggedIn) {
+        alert('يجب تسجيل الدخول كأدمن لحذف التطبيقات');
+        return;
+    }
+    const appElement = button.parentElement;
+    appElement.remove();
+}
+
+// إظهار الأقسام المختلفة
+function showSection(sectionId) {
+    const sections = document.querySelectorAll('.section');
+    sections.forEach(section => {
+        section.style.display = section.id === sectionId ? 'block' : 'none';
     });
 }
 
-function highlightStars(rating, container) {
-    const stars = container.querySelectorAll('.fa-star');
-    stars.forEach(star => {
-        if (parseInt(star.getAttribute('data-value')) <= rating) {
-            star.classList.add('hover');
-        } else {
-            star.classList.remove('hover');
-        }
-    });
+// استرجاع المشاريع عند تحميل الصفحة
+function loadProjects() {
+    projects.forEach(project => addProjectToGallery(project));
 }
 
-function resetStars(container) {
-    const stars = container.querySelectorAll('.fa-star');
-    stars.forEach(star => {
-        star.classList.remove('hover');
-    });
+// استرجاع التطبيقات عند تحميل الصفحة
+function loadApps() {
+    apps.forEach(app => addAppToGallery(app));
 }
+
+// استرجاع الأخبار عند تحميل الصفحة
+function loadNews() {
+    news.forEach(newsItem => addNewsToGallery(newsItem));
+}
+
+// استرجاع الإعلانات عند تحميل الصفحة
+function loadAds() {
+    ads.forEach(adItem => addAdToGallery(adItem));
+}
+
+// تحميل المحتوى عند تحميل الصفحة
+window.onload = () => {
+    loadProjects();
+    loadApps();
+    loadNews();
+    loadAds();
+};
