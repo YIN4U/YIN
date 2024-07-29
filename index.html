@@ -23,7 +23,14 @@
             <h1>متجر بكسلاب</h1>
             <img src="photo/logo.png" alt="Logo" class="logo">
         </div>
-        
+
+        <div class="navigation">
+            <button onclick="showSection('projects')">المشاريع</button>
+            <button onclick="showSection('apps')">التطبيقات</button>
+            <button onclick="showSection('news')">الأخبار</button>
+            <button onclick="showSection('comments')">التعليقات</button>
+        </div>
+
         <div class="login-form" id="loginForm">
             <h2>تسجيل الدخول</h2>
             <input type="text" id="username" placeholder="اسم المستخدم">
@@ -31,16 +38,20 @@
             <button onclick="login()">تسجيل الدخول</button>
         </div>
 
-        <div id="projectsContainer" class="projects-container">
+        <div id="projectsContainer" class="section">
             <!-- المشاريع ستظهر هنا -->
         </div>
 
-        <div id="appsContainer" class="apps-container">
+        <div id="appsContainer" class="section" style="display:none;">
             <!-- التطبيقات ستظهر هنا -->
         </div>
 
-        <div id="newsContainer" class="news-container">
+        <div id="newsContainer" class="section" style="display:none;">
             <!-- الأخبار ستظهر هنا -->
+        </div>
+
+        <div id="commentsContainer" class="section" style="display:none;">
+            <!-- التعليقات ستظهر هنا -->
         </div>
     </div>
     <script src="scripts.js"></script>
